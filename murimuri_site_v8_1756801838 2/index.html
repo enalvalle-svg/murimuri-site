@@ -230,7 +230,7 @@ body{ font-family: 'MuriSans', Inter, system-ui, -apple-system, Segoe UI, Roboto
                      <p><strong>WhatsApp:</strong> <a class="btn primary" href="https://wa.me/525669657508" target="_blank" rel="noopener">5669657508</a></p>
                      <p><strong>Dirección:</strong> Coyoacán, CDMX</p>`; content.appendChild(w);
       } else if(kind==='info'){
-        const w=document.createElement('div'); w.className='pad'; w.innerHTML='<p>Café de especialidad, pan y algo dulce en Coyoacán.</p>'; content.appendChild(w);
+        const w=document.createElement('div'); w.className='pad'; w.innerHTML='<p>Café de especialidad, handmade en Coyoacán.</p>'; content.appendChild(w);
       } else if(kind==='shop'){
         const w=document.createElement('div'); w.className='pad'; w.innerHTML='<p>Próximamente: tienda online.</p>'; content.appendChild(w);
       }
@@ -401,7 +401,7 @@ body{ font-family: 'MuriSans', Inter, system-ui, -apple-system, Segoe UI, Roboto
     "assets/foto5.jpg","assets/foto6.jpg","assets/foto7.jpg"
   ];
   const DURATION = 15000; // 15s visible
-  const ASPECT = 0.67;    // ~4:3
+  const ASPECT = 1.0;    // ~4:3
 
   // Pre-create 7 nodes
   const nodes = PHOTO_URLS.map((src,i)=>{
