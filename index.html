@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Muri Muri — Café</title>
   <meta name="description" content="Muri Muri — café de especialidad en Coyoacán, CDMX." />
 
@@ -16,7 +16,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet" />
 
   <style>
-    :root { --accent:#eaad96; --ink:#0f0f0f; --muted:#6a6a6a; --max:1180px; }
+    :root{
+      --accent:#eaad96;
+      --ink:#0f0f0f;
+      --muted:#6a6a6a;
+      --max:1180px;
+      --bg:#fde9e2; /* soft pink-peach */
+    }
 
     /* Local brand fonts */
     @font-face{
@@ -31,10 +37,11 @@
     }
 
     *{ box-sizing:border-box }
+    html, body { height:100%; }
     body{
-      margin:0; background:#fff; color:var(--ink);
+      margin:0; color:var(--ink);
       font-family:'MuriSans', Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height:1.6;
+      line-height:1.6; background:var(--bg);
     }
     a{ color:inherit; text-decoration:none }
 
@@ -42,8 +49,8 @@
 
     header{
       position:sticky; top:0; z-index:50;
-      background:rgba(255,255,255,.9);
-      backdrop-filter:saturate(1.2) blur(8px);
+      background:rgba(253,233,226,.9); /* tinted header over peach */
+      backdrop-filter:saturate(1.1) blur(8px);
       border-bottom:1px solid rgba(0,0,0,.06);
     }
     .nav{
@@ -60,16 +67,16 @@
     .playfield{
       position:relative; width:100%;
       height:calc(100dvh - 68px - 68px);
-      background:#fff;
+      background:var(--bg);
       overflow:hidden;
     }
 
-    /* Logo (bounces inside playfield) */
+    /* Bouncing logo (responsive) */
     #logo{
-      position:absolute; width:640px; /* 400% look */
+      position:absolute;
+      width:clamp(220px, 48vw, 640px);
       filter:drop-shadow(0 6px 16px rgba(0,0,0,.25));
-      cursor:pointer; z-index:2;
-      will-change:transform;
+      cursor:pointer; z-index:2; will-change:transform;
     }
     #logo.logo-fallback{
       padding:24px 30px; background:#eaad96; color:#000;
@@ -79,7 +86,7 @@
     /* Random slideshow photos: one at a time, fade only */
     .photo{
       position:absolute;
-      object-fit:cover; /* fills the bucket */
+      object-fit:cover; /* fills its bucket */
       border:1px solid rgba(0,0,0,.08);
       box-shadow:0 8px 24px rgba(0,0,0,.12);
       opacity:0; transition:opacity .6s ease;
@@ -87,47 +94,100 @@
     }
     .photo.show{ opacity:1 }
 
-    /* Bottom dock with 4 even links */
+    /* Bottom dock */
     .dock{
-      position:sticky; bottom:0; height:68px;
-      background:rgba(255,255,255,.9);
+      position:sticky; bottom:0; height:auto;
+      background:rgba(253,233,226,.9);
       border-top:1px solid rgba(0,0,0,.06);
-      backdrop-filter:saturate(1.2) blur(8px);
+      backdrop-filter:saturate(1.1) blur(8px);
     }
     .dock .row{
-      height:68px; display:grid; grid-template-columns:repeat(4,1fr);
+      display:grid; grid-template-columns:repeat(4,1fr);
       align-items:center; justify-items:center;
+      gap:8px; padding:10px 10px;
+      min-height:68px;
     }
-    .dock a{ font-weight:600 }
+    .dock a{ font-weight:600; text-align:center }
+    .dock small { display:block; color:var(--muted); font-size:.86rem; margin-top:2px; }
     .icon{ width:18px; height:18px; vertical-align:-3px; margin-right:6px; }
 
     footer{ padding:36px 0 48px; border-top:1px solid rgba(0,0,0,.06) }
     .footer-grid{ display:grid; gap:18px; grid-template-columns:2fr 1fr 1fr }
     .tiny{ font-size:.92rem; color:var(--muted) }
+
+    /* Modal */
+    .modal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; padding:20px; z-index:80}
+    .modal.open{display:flex}
+    .sheet{background:#fff; border-radius:16px; max-width:980px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.25); overflow:hidden}
+    .sheet .content{ position:relative }
+    .viewer{position:relative; max-width:980px; width:100%; background:#fff}
+    .viewer .fit{height:min(92vh,800px); width:100%; display:flex; align-items:center; justify-content:center; background:#fff}
+    .viewer img,.viewer iframe{max-width:100%; max-height:100%; border:0}
+    .viewer iframe{display:none} /* show only if JPG fallback fails */
+    .viewer .chrome{position:absolute; top:8px; left:8px; right:8px; display:flex; justify-content:space-between; pointer-events:none}
+    .viewer .btnIcon{pointer-events:auto; -webkit-tap-highlight-color:transparent; background:rgba(255,255,255,.95); border:1px solid rgba(0,0,0,.12); border-radius:999px; width:40px; height:40px; display:grid; place-items:center; font-size:22px; font-weight:800}
+    .viewer .group{display:flex; gap:8px}
+    @media (max-width:640px){ .viewer .btnIcon{ width:44px; height:44px; font-size:24px } }
+
+    /* Mobile tweaks */
+    @media (max-width:820px){
+      .footer-grid{ grid-template-columns:1fr; }
+      .dock .row{ grid-template-columns:1fr 1fr; }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
       <div><a class="brand" href="#top"><span class="wordmark">MURI MURI</span></a></div>
-      <nav><a href="#" id="contactBtn"> Lu cerrado, Ma: 10-14, Mi-Do: 10-20 </a></nav>
+      <nav><a href="#" id="hoursBtn"> Lu cerrado, Ma: 10-14, Mi-Do: 10-20 </a></nav>
       <div style="text-align:right">
         <a href="https://instagram.com/murimuricafe" target="_blank" rel="noopener">INSTAGRAM</a>
       </div>
     </div>
   </header>
 
-  <!-- Main interactive area -->
+  <!-- Main play area -->
   <section id="playfield" class="playfield" aria-label="Área interactiva">
     <img id="logo" src="assets/logo.png" alt="Muri Muri logo" />
-    <!-- The slideshow <img.photo> nodes are created by JS -->
+    <!-- slideshow .photo nodes are injected by JS -->
   </section>
+
+  <!-- Hidden section that contains the mini game -->
+  <div id="locked" style="display:none;">
+    <section style="padding:12px 0 0" class="wrap">
+      <p>
+        <a class="btn" href="mailto:hola@murimuri.coffee" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);font-weight:600;text-decoration:none;">hola@murimuri.coffee</a>
+        <a class="btn" href="https://wa.me/525669657508" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);font-weight:600;text-decoration:none;">WhatsApp 5669657508</a>
+        <a class="btn" href="#" id="openMenu" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);font-weight:600;text-decoration:none;background:var(--accent);color:#000;">Menú</a>
+      </p>
+    </section>
+
+    <section style="padding:0 0 40px" class="wrap">
+      <canvas id="runner" width="960" height="260" aria-label="Juego: salta con espacio o toque" style="width:100%;height:auto;max-width:960px;display:block;margin:0 auto;background:#fff;border-radius:8px;"></canvas>
+      <div class="tiny" style="text-align:center;">Espacio o toque para saltar. Enter para reiniciar.</div>
+    </section>
+
+    <footer>
+      <div class="wrap footer-grid">
+        <div>
+          <div class="brand"><span class="wordmark">MURI MURI</span></div>
+          <p class="tiny">© <span id="y"></span> Muri Muri. Todos los derechos reservados.</p>
+        </div>
+        <div><strong>Síguenos</strong><p><a href="https://instagram.com/murimuricafe" target="_blank" rel="noopener">@murimuricafe</a></p></div>
+        <div><strong>Contacto</strong><p><a href="mailto:hola@murimuri.coffee">hola@murimuri.coffee</a><br/><a href="https://wa.me/525669657508" target="_blank" rel="noopener">5669657508</a><br/>Coyoacán, CDMX</p></div>
+      </div>
+    </footer>
+  </div>
 
   <!-- Dock -->
   <div class="dock">
     <div class="row">
-      <a href="https://maps.google.com/?q=Muri%20Muri%20Caf%C3%A9%20Coyoac%C3%A1n" target="_blank" rel="noopener">04100 Coyoacán, CDMX</a>
-      <a href="assets/menu_1.pdf" target="_blank" rel="noopener">Menú (PDF)</a>
+      <a href="https://maps.google.com/?q=Muri%20Muri%20Caf%C3%A9%20Coyoac%C3%A1n" target="_blank" rel="noopener">
+        04100 Coyoacán, CDMX
+        <small>(cómo llegar)</small>
+      </a>
+      <a href="#" id="menuLink">Menú (PDF)</a>
       <a href="https://wa.me/525669657508" target="_blank" rel="noopener">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M18.1 15.9c-.3.8-1.6 1.6-2.3 1.7-.6.1-1.4.1-2.3-.1a9.8 9.8 0 0 1-4.7-2.6A10.7 10.7 0 0 1 5.9 9c-.2-1 .2-1.7.5-2.1.3-.4.7-.5 1.1-.5h.8c.2 0 .5.2.6.6l.7 1.7c.1.3 0 .6-.1.8l-.4.6-.2.3c-.1.1 0 .4.1.6.3.6.9 1.4 1.6 2.1.7.7 1.5 1.3 2.1 1.6.2.1.5.2.6.1l.3-.2.6-.4c.2-.1.5-.2.8-.1l1.7.7c.4.1.6.4.6.6 0 .4-.1.8-.2 1z" fill="#0f0f0f"/>
@@ -145,69 +205,99 @@
     </div>
   </div>
 
-  <footer>
-    <div class="wrap footer-grid">
-      <div>
-        <div class="brand"><span class="wordmark">MURI MURI</span></div>
-        <p class="tiny">© <span id="y"></span> Muri Muri. Todos los derechos reservados.</p>
-      </div>
-      <div><strong>Síguenos</strong><p><a href="https://instagram.com/murimuricafe" target="_blank" rel="noopener">@murimuricafe</a></p></div>
-      <div><strong>Contacto</strong><p>
-        <a href="mailto:hola@murimuri.coffee">hola@murimuri.coffee</a><br/>
-        <a href="https://wa.me/525669657508" target="_blank" rel="noopener">5669657508</a><br/>
-        Coyoacán, CDMX</p>
-      </div>
-    </div>
-  </footer>
+  <!-- Modal root -->
+  <div id="modal" class="modal" aria-label="Modal" role="dialog" aria-modal="true">
+    <div class="sheet"><div id="modalContent" class="content"></div></div>
+  </div>
 
   <script>
-    // --- Utilities ---
+    // Utilities
     const $ = (sel, root = document) => root.querySelector(sel);
 
-    // Year stamp
+    // Year
     const y = $('#y'); if (y) y.textContent = new Date().getFullYear();
 
-    // --- Bouncing logo inside the playfield ---
-    (function initLogoBounce(){
-      const field = $('#playfield');
-      const logo  = $('#logo');
-      if(!field || !logo) return;
+    // Modal base
+    const modal = $('#modal');
+    const content = $('#modalContent');
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('open'); });
 
-      let x = 20, y = 20;         // position
-      let vx = 1.0, vy = 0.8;     // velocity
-      let lw = 640, lh = 200;     // logo size cache
+    // --- Menu modal (prefers JPG, falls back to PDF) ---
+    const MENU = [
+      { img:'assets/menu_1.jpg', pdf:'assets/menu_1.pdf' },
+      { img:'assets/menu_2.jpg', pdf:'assets/menu_2.pdf' },
+      { img:'assets/menu_3.jpg', pdf:'assets/menu_3.pdf' },
+    ];
 
-      function measure(){
-        const r = logo.getBoundingClientRect();
-        if (r.width && r.height){ lw = r.width; lh = r.height; }
+    function openMenu(start=0){
+      modal.classList.add('open');
+      content.innerHTML = `
+        <div class="viewer">
+          <div class="chrome">
+            <div class="group">
+              <button class="btnIcon" id="mPrev"  aria-label="Anterior">‹</button>
+              <button class="btnIcon" id="mNext"  aria-label="Siguiente">›</button>
+            </div>
+            <button class="btnIcon" id="mClose" aria-label="Cerrar">×</button>
+          </div>
+          <div class="fit">
+            <img id="menuImg" alt="Menú" />
+            <iframe id="menuPdf"></iframe>
+          </div>
+        </div>
+      `;
+
+      const img = content.querySelector('#menuImg');
+      const pdf = content.querySelector('#menuPdf');
+
+      let idx = start;
+
+      function show(i){
+        idx = (i + MENU.length) % MENU.length;
+        img.style.display='none'; pdf.style.display='none';
+        img.src = MENU[idx].img + '?v=' + Date.now();
+        img.onload  = ()=>{ img.style.display='block'; };
+        img.onerror = ()=> {
+          if (MENU[idx].pdf){
+            pdf.src = MENU[idx].pdf + '#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0';
+            pdf.style.display='block';
+          }
+        };
       }
-      logo.addEventListener('load', measure);
-      setTimeout(measure, 200);
 
-      function frame(){
-        const fw = field.clientWidth, fh = field.clientHeight;
-        x += vx; y += vy;
-        if (x <= 0 || x + lw >= fw) vx *= -1;
-        if (y <= 0 || y + lh >= fh) vy *= -1;
-        logo.style.transform = `translate(${x}px, ${y}px)`;
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    })();
+      content.querySelector('#mClose').onclick = ()=> modal.classList.remove('open');
+      content.querySelector('#mPrev').onclick  = ()=> show(idx-1);
+      content.querySelector('#mNext').onclick  = ()=> show(idx+1);
+
+      // Keyboard + swipe
+      const onKey = (e)=>{ if(e.key==='Escape'){ modal.classList.remove('open'); }
+                           if(e.key==='ArrowLeft')  show(idx-1);
+                           if(e.key==='ArrowRight') show(idx+1); };
+      document.addEventListener('keydown', onKey, { once:false });
+
+      let sx=0, fit=content.querySelector('.fit');
+      fit.addEventListener('touchstart', e=> sx=e.changedTouches[0].clientX, {passive:true});
+      fit.addEventListener('touchend',   e=>{ const dx=e.changedTouches[0].clientX - sx; if(Math.abs(dx)>40) (dx>0 ? show(idx-1) : show(idx+1)); }, {passive:true});
+
+      show(idx);
+    }
+
+    // Hook up dock/menu buttons
+    $('#menuLink')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenu(0); });
+    $('#openMenu')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenu(0); });
 
     // --- Random, one-at-a-time slideshow (.photo), 15s, no repeats in cycle ---
     (function initRandomSlideshow(){
       const field = $('#playfield');
       if(!field) return;
 
-      // Configure your images here
       const PHOTO_URLS = [
         'assets/foto1.jpg','assets/foto2.jpg','assets/foto3.jpg','assets/foto4.jpg',
         'assets/foto5.jpg','assets/foto6.jpg','assets/foto7.jpg'
       ];
       const DURATION = 15000; // 15 seconds per photo
 
-      // Pre-create <img.photo> nodes (hidden initially)
+      // Create nodes
       const nodes = PHOTO_URLS.map((src, i) => {
         const img = document.createElement('img');
         img.className = 'photo';
@@ -217,16 +307,18 @@
         return img;
       });
 
-      // Helpers
       const rint = (min, max) => Math.floor(Math.random()*(max-min+1)) + min;
 
-      // Sizes: three "buckets" + slight variance
       function randomSize(){
+        // Slightly smaller on phones
+        const isPhone = window.matchMedia('(max-width: 640px)').matches;
         const bucket = rint(0, 2);
-        let w = bucket === 0 ? 260 : (bucket === 1 ? 320 : 380);
+        let w = isPhone
+          ? (bucket===0 ? 200 : bucket===1 ? 240 : 280)
+          : (bucket===0 ? 260 : bucket===1 ? 320 : 380);
         w += rint(-16, 24);
-        const aspect = 0.67; // ~4:3
-        const h = Math.round(w / aspect);
+        const aspect = 4/3;
+        const h = Math.round(w * (1/aspect));
         return { w, h };
       }
 
@@ -241,7 +333,6 @@
         img.style.height = h + 'px';
       }
 
-      // Fisher–Yates shuffle
       function shuffle(arr){
         const a = arr.slice();
         for (let i=a.length-1; i>0; i--){
@@ -251,7 +342,6 @@
         return a;
       }
 
-      // Sequence control: show each photo once per cycle in random order
       let order = shuffle([...nodes.keys()]);
       let cursor = 0;
       let lastIdx = -1;
@@ -259,57 +349,127 @@
       function nextOrder(){
         const oldLast = lastIdx;
         order = shuffle([...nodes.keys()]);
-        // avoid immediate repeat at cycle boundary
         if (order.length > 1 && order[0] === oldLast) {
           [order[0], order[1]] = [order[1], order[0]];
         }
         cursor = 0;
       }
 
-      function hideAll(){
-        nodes.forEach(n => n.classList.remove('show'));
-      }
+      function hideAll(){ nodes.forEach(n => n.classList.remove('show')); }
 
       function showNext(){
-        // Reset order if we finished a cycle
         if (cursor >= order.length) nextOrder();
-
-        // Pick image for this step
         const idx = order[cursor++];
         lastIdx = idx;
         const img = nodes[idx];
 
-        // Position & size
         const { w, h } = randomSize();
         placeRandom(img, w, h);
 
-        // Fade in the chosen one, hide others
         hideAll();
-        requestAnimationFrame(() => img.classList.add('show'));
+        requestAnimationFrame(()=> img.classList.add('show'));
 
-        // Schedule next
         setTimeout(showNext, DURATION);
       }
 
-      // Kick off once the field has layout
       const ensureStart = () => {
-        if (field.clientWidth && field.clientHeight) {
-          showNext();
-        } else {
-          requestAnimationFrame(ensureStart);
-        }
+        if (field.clientWidth && field.clientHeight) showNext();
+        else requestAnimationFrame(ensureStart);
       };
       ensureStart();
 
-      // Optional: re-place current photo on resize to keep it inside
       window.addEventListener('resize', () => {
         const current = nodes[lastIdx];
         if (!current) return;
         const w = current.offsetWidth || 320;
-        const h = current.offsetHeight || 480;
+        const h = current.offsetHeight || 240;
         placeRandom(current, w, h);
       });
     })();
+
+    // --- Bouncing logo + click to reveal game and scroll ---
+    (function initLogoBounceAndGame(){
+      const field   = $('#playfield');
+      const logo    = $('#logo');
+      const locked  = $('#locked');
+      const runner  = $('#runner')?.parentElement?.parentElement; // section wrapping the canvas
+      if(!field || !logo) return;
+
+      let x=20, y=20, vx=1.0, vy=0.9;
+      let lw=320, lh=120;
+
+      function measure(){
+        const r = logo.getBoundingClientRect();
+        if (r.width && r.height){ lw=r.width; lh=r.height; }
+      }
+      logo.addEventListener('load', measure);
+      setTimeout(measure, 200);
+
+      function frame(){
+        const fw=field.clientWidth, fh=field.clientHeight;
+        x += vx; y += vy;
+        if(x<=0 || x+lw>=fw) vx *= -1;
+        if(y<=0 || y+lh>=fh) vy *= -1;
+        logo.style.transform = `translate(${x}px,${y}px)`;
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+
+      let gameInited = false;
+      logo.addEventListener('click', ()=>{
+        if (locked) locked.style.display='block';
+        if (!gameInited && typeof initRunner === 'function'){ initRunner(); gameInited = true; }
+        runner && runner.scrollIntoView({ behavior:'smooth' });
+      });
+    })();
+
+    // --- Runner game (coffee bean obstacles) ---
+    function initRunner(){
+      const cvs = document.getElementById('runner'); const ctx = cvs.getContext('2d');
+      let running = true; const G = 0.6, JUMP = -11; const ground = cvs.height - 28;
+      const player = {x:80, y:ground, vy:0, w:56, h:56}; let obstacles = [];
+      const sprite = new Image(); sprite.src = 'assets/recurso.png';
+      const bean   = new Image(); bean.src   = 'assets/bean.png';
+
+      function reset(){ player.y=ground; player.vy=0; obstacles=[]; running=true; }
+      function spawn(){ const size = 26 + Math.random()*14; obstacles.push({x:cvs.width+20, y:ground, w:size, h:size, size}); }
+      let spawnGap = 0;
+
+      function draw(){
+        ctx.clearRect(0,0,cvs.width,cvs.height);
+        ctx.strokeStyle = 'rgba(0,0,0,.15)'; ctx.beginPath(); ctx.moveTo(0, ground+2); ctx.lineTo(cvs.width, ground+2); ctx.stroke();
+        if(sprite.complete && sprite.naturalWidth){ ctx.drawImage(sprite, player.x-14, player.y - player.h, player.w, player.h); }
+        else{ ctx.fillStyle = '#935c4d'; ctx.fillRect(player.x, player.y - player.h, player.w, player.h); }
+        obstacles.forEach(o=>{
+          if (bean.complete && bean.naturalWidth){
+            ctx.drawImage(bean, o.x - o.size/2, o.y - o.size, o.size, o.size);
+          } else {
+            ctx.fillStyle = '#6b3e2e';
+            ctx.beginPath();
+            ctx.ellipse(o.x, o.y - o.size/2, o.size/2.4, o.size/1.9, 0.4, 0, Math.PI*2);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(0,0,0,.25)';
+            ctx.beginPath();
+            ctx.moveTo(o.x - o.size/4, o.y - o.size);
+            ctx.quadraticCurveTo(o.x, o.y - o.size/2, o.x - o.size/6, o.y);
+            ctx.stroke();
+          }
+        });
+      }
+
+      function update(){
+        if(!running) return;
+        player.vy += G; player.y += player.vy; if(player.y > ground){ player.y = ground; player.vy = 0; }
+        const speed = 5.2; obstacles.forEach(o=> o.x -= speed); obstacles = obstacles.filter(o=> o.x + o.w > 0);
+        spawnGap -= speed; if(spawnGap <= 0){ spawn(); spawnGap = 240 + Math.random()*220; }
+        for(const o of obstacles){ if(player.x < o.x + o.w && player.x + player.w > o.x && player.y > o.y - o.h){ running = false; } }
+      }
+      (function loop(){ update(); draw(); requestAnimationFrame(loop); })();
+      function jump(){ if(player.y === ground){ player.vy = JUMP; } }
+      cvs.addEventListener('pointerdown', jump);
+      document.addEventListener('keydown', (e)=>{ if(e.code==='Space'){ e.preventDefault(); jump(); } if(e.code==='Enter' && !running){ reset(); } });
+      cvs.addEventListener('click', ()=>{ if(!running){ reset(); } });
+    }
   </script>
 </body>
 </html>
