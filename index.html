@@ -325,31 +325,7 @@
       const MENUS = Array.isArray(CONFIG.menu) && CONFIG.menu.length ? CONFIG.menu : [];
       if (!MENUS.length) return;
       
-      // --- Open any PDF in the same modal (page-fit, minimal chrome) ---
-  function openPdfModal(url){
-    modal.classList.add('open');
-    content.innerHTML = `
-      <div class="viewer">
-        <div class="chrome">
-          <div class="group"></div>
-          <button class="btnIcon" id="introClose" aria-label="Cerrar">×</button>
-        </div>
-        <div class="fit"><iframe id="introPdf"></iframe></div>
-      </div>
-    `;
-    const iframe = content.querySelector('#introPdf');
-    // Handle spaces in filename (e.g., "copy.pdf") safely
-    const base = encodeURI(url);
-    const params = '#zoom=page-fit&view=Fit&toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0';
-    iframe.src = base + (base.includes('#') ? '' : params);
-
-    content.querySelector('#introClose').onclick = ()=> modal.classList.remove('open');
-  }
-
-  // Show it once the page finishes loading
-  window.addEventListener('load', () => {
-    openPdfModal('assets/cafes_lista_typewriter_pages2 copy.pdf');
-  });
+      
 
       modal.classList.add('open');
       content.innerHTML = `
@@ -391,6 +367,32 @@
     }
     $('#menuLink')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenu(0); });
     $('#openMenu')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenu(0); });
+
+      // --- Open any PDF in the same modal (page-fit, minimal chrome) ---
+    function openPdfModal(url){
+      modal.classList.add('open');
+      content.innerHTML = `
+        <div class="viewer">
+          <div class="chrome">
+            <div class="group"></div>
+            <button class="btnIcon" id="introClose" aria-label="Cerrar">×</button>
+          </div>
+          <div class="fit"><iframe id="introPdf"></iframe></div>
+        </div>
+      `;
+      const iframe = content.querySelector('#introPdf');
+      // Handle spaces in filename (e.g., "copy.pdf") safely
+      const base = encodeURI(url);
+      const params = '#zoom=page-fit&view=Fit&toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0';
+      iframe.src = base + (base.includes('#') ? '' : params);
+  
+      content.querySelector('#introClose').onclick = ()=> modal.classList.remove('open');
+    }
+  
+    // Show it once the page finishes loading
+    window.addEventListener('load', () => {
+      openPdfModal('assets/cafes_lista_typewriter_pages2 copy.pdf');
+    });
 
     // ===== Slideshow: up to 5 visible, no duplicates concurrently =====
     (function initMultiSlideshow(){
