@@ -121,7 +121,22 @@ body{ font-family: 'MuriSans', Inter, system-ui, -apple-system, Segoe UI, Roboto
 .dock .icon{width:18px;height:18px;vertical-align:-3px;margin-right:6px}
 /* Hide old floating bouncer image if present */
 #bouncer{display:none !important}
+    
+/* --- Menu viewer (no PDF chrome), mobile ready --- */
+.viewer{position:relative;max-width:980px;width:100%;background:#fff}
+.viewer .fit{height:min(92vh,800px);width:100%;display:flex;align-items:center;justify-content:center;background:#fff}
+.viewer img,.viewer iframe{max-width:100%;max-height:100%;border:0}
+.viewer iframe{display:none} /* show only if JPG fallback fails */
+.viewer .chrome{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;pointer-events:none}
+.viewer .btnIcon{pointer-events:auto;-webkit-tap-highlight-color:transparent;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.12);border-radius:999px;width:40px;height:40px;display:grid;place-items:center;font-size:22px;font-weight:800}
+.viewer .group{display:flex;gap:8px}
+@media (max-width:640px){ .viewer .btnIcon{width:44px;height:44px;font-size:24px} }
+
+/* Floating photos: show WHOLE image (no crop) */
+.photo{position:absolute;object-fit:contain;background:#fff;border:1px solid rgba(0,0,0,.08);opacity:0;transition:opacity .6s ease;z-index:1;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.photo.show{opacity:1}
 </style>
+
 </head>
 <body>
 <header>
@@ -203,21 +218,73 @@ body{ font-family: 'MuriSans', Inter, system-ui, -apple-system, Segoe UI, Roboto
     // Top CONTACTO opens popup
     document.getElementById('contactBtn').addEventListener('click', (e)=>{ e.preventDefault(); openModal('contact'); });
 
-    // Menu popup inline (no chrome); use arrows to switch
-    const pdfs = ['assets/menu_1.pdf','assets/menu_2.pdf','assets/menu_3.pdf'].filter(Boolean);
-    document.getElementById('openMenu')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenuViewer(0); });
-    function openMenuViewer(i){
-      const clamp = (n,min,max)=> Math.max(min, Math.min(max, n));
-      const idx = clamp(i, 0, pdfs.length-1);
+    /* Prefer images; fall back to PDFs only if JPG is missing */
+    const MENU = [
+      {img:'assets/menu_1.jpg', pdf:'assets/menu_1.pdf'},
+      {img:'assets/menu_2.jpg', pdf:'assets/menu_2.pdf'},
+      {img:'assets/menu_3.jpg', pdf:'assets/menu_3.pdf'}
+    ];
+    
+    document.getElementById('openMenu')?.addEventListener('click', (e)=>{
+      e.preventDefault(); openMenu(0);
+    });
+    
+    function openMenu(start=0){
+      const modal   = document.getElementById('modal');
+      const content = document.getElementById('modalContent');
       modal.classList.add('open');
-      content.innerHTML = `<iframe src="${pdfs[idx]}#view=FitH&toolbar=0&navpanes=0&statusbar=0&messages=0&scrollbar=0"></iframe>`;
-      document.onkeydown = (ev)=>{
-        if(ev.key==='Escape'){ modal.classList.remove('open'); }
-        if(ev.key==='ArrowLeft'){ openMenuViewer(idx-1); }
-        if(ev.key==='ArrowRight'){ openMenuViewer(idx+1); }
-      };
+    
+      let idx = start;
+      content.innerHTML = `
+        <div class="viewer">
+          <div class="chrome">
+            <div class="group">
+              <button class="btnIcon" id="mPrev"  aria-label="Anterior">‹</button>
+              <button class="btnIcon" id="mNext"  aria-label="Siguiente">›</button>
+            </div>
+            <button class="btnIcon" id="mClose" aria-label="Cerrar">×</button>
+          </div>
+          <div class="fit">
+            <img id="menuImg" alt="Menú" />
+            <iframe id="menuPdf"></iframe>
+          </div>
+        </div>`;
+    
+      const img = content.querySelector('#menuImg');
+      const pdf = content.querySelector('#menuPdf');
+    
+      function show(i){
+        idx = (i + MENU.length) % MENU.length;
+        img.style.display='none'; pdf.style.display='none';
+        img.src = MENU[idx].img + '?v=' + Date.now();  // cache-buster while testing
+        img.onload  = ()=> { img.style.display='block'; };
+        img.onerror = ()=> {
+          if (MENU[idx].pdf){
+            pdf.src = MENU[idx].pdf + '#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0&scrollbar=0';
+            pdf.style.display='block';
+          }
+        };
+      }
+    
+      content.querySelector('#mClose').onclick = ()=> modal.classList.remove('open');
+      content.querySelector('#mPrev').onclick  = ()=> show(idx-1);
+      content.querySelector('#mNext').onclick  = ()=> show(idx+1);
+    
+      // keyboard + swipe
+      const onKey = (e)=>{ if(e.key==='Escape') modal.classList.remove('open');
+                           if(e.key==='ArrowLeft')  show(idx-1);
+                           if(e.key==='ArrowRight') show(idx+1); };
+      document.addEventListener('keydown', onKey, {once:false});
+    
+      let sx=0, fit=content.querySelector('.fit');
+      fit.addEventListener('touchstart', e=> sx=e.changedTouches[0].clientX, {passive:true});
+      fit.addEventListener('touchend',   e=>{
+        const dx = e.changedTouches[0].clientX - sx;
+        if(Math.abs(dx)>40) (dx>0 ? show(idx-1) : show(idx+1));
+      }, {passive:true});
+    
+      show(start);
     }
-
     // Other modal content
     function openModal(kind){
       modal.classList.add('open'); content.innerHTML='';
