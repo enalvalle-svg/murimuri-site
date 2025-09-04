@@ -97,9 +97,9 @@
       gap:8px; padding:10px 10px; min-height:68px;
     }
     .dock a, .dock span { font-weight:600; text-align:center }
-    .dock small { display:block; color:var(--muted); font-size:.56rem; margin-top:2.5px; }
+    .dock small { display:block; color:var(--muted); font-size:.40rem; margin-top:1px; }
     .icon{ width:18px; height:18px; vertical-align:-3px; margin-right:6px; }
-    @media (max-width:640px){ #hours{ font-size:.7rem; opacity:.9 } }
+    @media (max-width:640px){ #hours{ font-size:.5rem; opacity:.8 } }
 
     footer{ padding:36px 0 48px; border-top:1px solid rgba(0,0,0,.06) }
     .footer-grid{ display:grid; gap:18px; grid-template-columns:2fr 1fr 1fr }
@@ -150,9 +150,9 @@
       <div class="row">
         <a id="addrLink" href="#" target="_blank" rel="noopener">
           <span id="addrText">Dirección</span>
-          <small>(cómo llegar)</small>
+          <small>(CÓMO LLEGAR)</small>
         </a>
-        <a href="#" id="menuLink">Menú (PDF)</a>
+        <a href="#" id="menuLink">MENÚ</a>
        <!-- <a href="#" id="storeLink">Tienda</a>
         <a href="#" id="blogLink">Blog</a>  -->
         
@@ -161,14 +161,14 @@
             <path d="M18.1 15.9c-.3.8-1.6 1.6-2.3 1.7-.6.1-1.4.1-2.3-.1a9.8 9.8 0 0 1-4.7-2.6A10.7 10.7 0 0 1 5.9 9c-.2-1 .2-1.7.5-2.1.3-.4.7-.5 1.1-.5h.8c.2 0 .5.2.6.6l.7 1.7c.1.3 0 .6-.1.8l-.4.6-.2.3c-.1.1 0 .4.1.6.3.6.9 1.4 1.6 2.1.7.7 1.5 1.3 2.1 1.6.2.1.5.2.6.1l.3-.2.6-.4c.2-.1.5-.2.8-.1l1.7.7c.4.1.6.4.6.6 0 .4-.1.8-.2 1z" fill="#0f0f0f"/>
             <circle cx="12" cy="12" r="10" fill="none" stroke="#0f0f0f" stroke-width="1.5"/>
           </svg>
-          WhatsApp
+          52 5669 6575 08
         </a>
         <a id="mailLink" href="mailto:hola@murimuri.coffee" rel="noopener">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11z" fill="none" stroke="#0f0f0f" stroke-width="1.5"/>
             <path d="M4 7l8 6 8-6" fill="none" stroke="#0f0f0f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
           </svg>
-          Mail
+          hola@murimuri.coffee
         </a>
       </div>
     </div>
@@ -188,7 +188,7 @@
     <section class="wrap" style="padding:0 0 40px">
       <canvas id="runner" width="960" height="260" aria-label="Juego: salta con espacio o toque"
               style="width:100%;height:auto;max-width:960px;display:block;margin:0 auto;background:var(--bg);border-radius:8px;"></canvas>
-      <div class="tiny" style="text-align:center;">Espacio o toque para saltar. Enter para reiniciar.</div>
+      <div class="tiny" style="text-align:center;"><small>Espacio o toque para saltar. Enter para reiniciar.</small></div>
     </section>
 
     <!-- Hidden Store page -->
@@ -229,9 +229,9 @@
   {
     "logo": "assets/logo.png",
     "logo2": "assets/logo.jpg",
-    "hours": "Lu cerrado, Ma: 10-14, Mi-Do: 10-20",
+    "hours": "Lu: Closed/ Ma: 10-14/ Mi-Do: 10-20",
     "address": {
-      "text": "04100 Coyoacán, CDMX",
+      "text": "Coyoacán 04100, CDMX",
       "mapsUrl": "https://maps.google.com/?q=Muri%20Muri%20Caf%C3%A9%20Coyoac%C3%A1n"
     },
     "whatsapp": {
