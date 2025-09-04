@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Muri Muri — Café</title>
+  <meta name="description" content="Muri Muri — café de especialidad en Coyoacán, CDMX." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --accent:#eaad96; --ink:#0f0f0f; --muted:#6a6a6a; --max:1180px }
+    *{box-sizing:border-box}
+    body{margin:0;background:#fff;color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid rgba(0,0,0,.06)}
+    .nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:68px}
+    .nav a{font-weight:600}
+    .brand .wordmark{font-family:'Space Grotesk',Inter,sans-serif;font-weight:800;letter-spacing:.06em}
+
+    /* --- FONTS --- */
+    @font-face{
+      font-family: 'Marfa';
+      src: url('assets/fonts/ABCMARFA-SEMIBOLD-TRIAL.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face{
+      font-family: 'MuriSans';
+      src: url('assets/fonts/Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    body{ font-family: 'MuriSans', Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    .brand .wordmark{ font-family: 'Marfa','Space Grotesk',Inter,sans-serif; font-weight:700; letter-spacing:.06em; }
+
+    /* Stage (no border line) */
+    #stage{
+      position:relative;
+      height:min(64vh, 600px);
+      min-height:420px;
+      margin:18px auto 8px;
+      max-width:var(--max);
+      background:#fff;
+      border:0;
+      border-radius:20px;
+      overflow:hidden;
+    }
+
+    /* Floating squares */
+    .bubble{
+      position:absolute;
+      display:none;
+      width:230px;
+      transition:opacity .5s ease, transform .5s ease;
+      opacity:0;
+      cursor:pointer;
+    }
+    .bubble.show{ display:block; opacity:1 }
+    .bubble img{width:100%; height:auto; border-radius:16px; border:1px solid rgba(0,0,0,.06); display:block; object-fit:cover}
+    .bubble figcaption{position:absolute; left:10px; bottom:10px; padding:6px 10px; border-radius:999px; background:rgba(234,173,150,.95); color:#000; font-weight:700; font-size:.9rem; font-family:'Space Grotesk',Inter,sans-serif}
+
+    /* Bouncing logo image (200%) */
+    #bouncer{
+      position:fixed; left:20px; top:8px; z-index:70; cursor:pointer; opacity:.98;
+      filter:drop-shadow(0 6px 16px rgba(0,0,0,.25));
+      width:clamp(360px, 80vw, 960px);
+    }
+    @media (max-width:640px){ #bouncer{ width:86vw } }
+
+    #locked{display:none}
+
+    /* Modal */
+    .modal{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; padding:20px; z-index:80}
+    .modal.open{display:flex}
+    .sheet{background:#fff; border-radius:16px; max-width:980px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.25); overflow:hidden}
+    .sheet iframe{width:100%; height:86vh; border:0; background:#fff}
+    .sheet .pad{padding:16px}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:12px 18px; border-radius:999px; border:1px solid rgba(0,0,0,.12); font-weight:600}
+    .btn.primary{background:var(--accent); border-color:transparent; color:#000}
+
+    footer{padding:36px 0 48px; border-top:1px solid rgba(0,0,0,.06)}
+    .footer-grid{display:grid; gap:18px; grid-template-columns:2fr 1fr 1fr}
+    .tiny{font-size:.92rem; color:var(--muted)}
+    #runner{width:100%; height:auto; display:block; max-width:960px; margin:0 auto}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div><a class="brand" href="#top"><span class="wordmark">MURI MURI</span></a></div>
+      <nav><a href="#" id="contactBtn">CONTACTO</a></nav>
+      <div style="text-align:right"><a href="https://instagram.com/murimuricafe" target="_blank" rel="noopener">INSTAGRAM</a></div>
+    </div>
+  </header>
+
+  <img id="bouncer" src="assets/logo.png" alt="Logo Muri Muri" />
+
+  <main id="top">
+    <section id="stage" aria-label="Galería flotante">
+      <figure class="bubble" data-key="1" data-open="shop"><img src="assets/foto1.jpg" alt="Tienda" loading="eager" decoding="async" width="230" height="230"/><figcaption>Tienda</figcaption></figure>
+      <figure class="bubble" data-key="2" data-open="info"><img src="assets/foto2.jpg" alt="Info" loading="eager" decoding="async" width="230" height="230"/><figcaption>Info</figcaption></figure>
+      <figure class="bubble" data-key="3" data-open="map"><img src="assets/foto3.jpg" alt="Mapa" loading="eager" decoding="async" width="230" height="230"/><figcaption>Mapa</figcaption></figure>
+      <figure class="bubble" data-key="4" data-open="contact"><img src="assets/foto4.jpg" alt="Contacto" loading="eager" decoding="async" width="230" height="230"/><figcaption>Contacto</figcaption></figure>
+      <figure class="bubble" data-key="5" data-open="menu"><img src="assets/foto5.jpg" alt="Menú" loading="eager" decoding="async" width="230" height="230"/><figcaption>Menú</figcaption></figure>
+      <figure class="bubble" data-key="6"><img src="assets/foto6.jpg" alt="Mensual" loading="eager" decoding="async" width="230" height="230"/><figcaption>Mensual</figcaption></figure>
+      <figure class="bubble" data-key="7"><img src="assets/foto7.jpg" alt="7" loading="eager" decoding="async" width="230" height="230"/><figcaption>7</figcaption></figure>
+      <figure class="bubble" data-key="8"><img src="assets/foto8.jpg" alt="8" loading="eager" decoding="async" width="230" height="230"/><figcaption>8</figcaption></figure>
+    </section>
+
+    <div id="locked">
+      <section class="wrap" style="padding:12px 0 0">
+        <p>
+          <a class="btn" href="mailto:hola@murimuri.coffee">hola@murimuri.coffee</a>
+          <a class="btn" href="https://wa.me/525669657508" target="_blank" rel="noopener">WhatsApp 5669657508</a>
+          <a class="btn primary" href="#" id="openMenu">Menú</a>
+        </p>
+      </section>
+
+      <section class="wrap" style="padding:0 0 40px">
+        <canvas id="runner" width="960" height="260" aria-label="Juego: salta con espacio o toque"></canvas>
+        <div class="tiny">Espacio o toque para saltar. Enter para reiniciar.</div>
+      </section>
+
+      <footer>
+        <div class="wrap footer-grid">
+          <div>
+            <div class="brand"><span class="wordmark">MURI MURI</span></div>
+            <p class="tiny">© <span id="y"></span> Muri Muri. Todos los derechos reservados.</p>
+          </div>
+          <div><strong>Síguenos</strong><p><a href="https://instagram.com/murimuricafe" target="_blank" rel="noopener">@murimuricafe</a></p></div>
+          <div><strong>Contacto</strong><p><a href="mailto:hola@murimuri.coffee">hola@murimuri.coffee</a><br><a href="https://wa.me/525669657508" target="_blank" rel="noopener">5669657508</a><br>Coyoacán, CDMX</p></div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <div class="modal" id="modal" aria-modal="true" role="dialog" aria-label="Modal">
+    <div class="sheet"><div class="content" id="modalContent"></div></div>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById('y') && (document.getElementById('y').textContent = new Date().getFullYear());
+
+    // Modal base
+    const modal = document.getElementById('modal');
+    const content = document.getElementById('modalContent');
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('open'); });
+
+    // Top CONTACTO opens popup
+    document.getElementById('contactBtn').addEventListener('click', (e)=>{ e.preventDefault(); openModal('contact'); });
+
+    // Menu popup inline (no chrome); use arrows to switch
+    const pdfs = ['assets/menu_1.pdf','assets/menu_2.pdf','assets/menu_3.pdf'].filter(Boolean);
+    document.getElementById('openMenu')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenuViewer(0); });
+    function openMenuViewer(i){
+      const clamp = (n,min,max)=> Math.max(min, Math.min(max, n));
+      const idx = clamp(i, 0, pdfs.length-1);
+      modal.classList.add('open');
+      content.innerHTML = `<iframe src="${pdfs[idx]}#view=FitH&toolbar=0&navpanes=0&statusbar=0&messages=0&scrollbar=0"></iframe>`;
+      document.onkeydown = (ev)=>{
+        if(ev.key==='Escape'){ modal.classList.remove('open'); }
+        if(ev.key==='ArrowLeft'){ openMenuViewer(idx-1); }
+        if(ev.key==='ArrowRight'){ openMenuViewer(idx+1); }
+      };
+    }
+
+    // Other modal content
+    function openModal(kind){
+      modal.classList.add('open'); content.innerHTML='';
+      if(kind==='map'){
+        const i=document.createElement('iframe'); i.loading='lazy';
+        i.src='https://www.google.com/maps?q=Muri%20Muri%20Caf%C3%A9%20Coyoac%C3%A1n&output=embed'; content.appendChild(i);
+      } else if(kind==='contact'){
+        const w=document.createElement('div'); w.className='pad';
+        w.innerHTML=`<p><strong>Correo:</strong> <a class="btn" href="mailto:hola@murimuri.coffee">hola@murimuri.coffee</a></p>
+                     <p><strong>WhatsApp:</strong> <a class="btn primary" href="https://wa.me/525669657508" target="_blank" rel="noopener">5669657508</a></p>
+                     <p><strong>Dirección:</strong> Coyoacán, CDMX</p>`; content.appendChild(w);
+      } else if(kind==='info'){
+        const w=document.createElement('div'); w.className='pad'; w.innerHTML='<p>Café de especialidad, pan y algo dulce en Coyoacán.</p>'; content.appendChild(w);
+      } else if(kind==='shop'){
+        const w=document.createElement('div'); w.className='pad'; w.innerHTML='<p>Próximamente: tienda online.</p>'; content.appendChild(w);
+      }
+    }
+
+    // Random bubbles
+    const stage = document.getElementById('stage');
+    const bubbles = Array.from(document.querySelectorAll('.bubble'));
+
+    window.addEventListener('load', () => {
+      document.querySelectorAll('#stage img').forEach(img => {
+        img.addEventListener('error', () => console.warn('Missing image:', img.src));
+      });
+    });
+
+    function placeRandom(el) {
+      const prevDisplay = el.style.display;
+      const prevOpacity = el.style.opacity;
+      el.style.display = 'block'; el.style.opacity  = 0;
+      const bw = el.offsetWidth  || 230;
+      const bh = el.offsetHeight || 230;
+      const sw = stage.clientWidth;
+      const sh = stage.clientHeight;
+      if (!sw || !sh) { requestAnimationFrame(() => placeRandom(el)); return; }
+      const x = Math.max(0, Math.floor(Math.random() * Math.max(1, sw - bw)));
+      const y = Math.max(0, Math.floor(Math.random() * Math.max(1, sh - bh)));
+      el.style.left = `${x}px`; el.style.top  = `${y}px`;
+      el.style.display = prevDisplay || 'none'; el.style.opacity = prevOpacity || 0;
+    }
+
+    function showBubble(el){
+      placeRandom(el);
+      el.classList.add('show');
+      setTimeout(()=> el.classList.remove('show'), 10000);
+      const kind = el.getAttribute('data-open');
+      el.onclick = kind ? (()=> openModal(kind)) : null;
+    }
+
+    const order = bubbles.map((_,i)=>i).sort(()=> Math.random()-0.5);
+    order.forEach((idx,i)=> setTimeout(()=> showBubble(bubbles[idx]), i*300));
+
+    bubbles.forEach((el, idx)=>{
+      const n = idx + 1; const interval = n * 10000;
+      setTimeout(()=>{ setInterval(()=> showBubble(el), interval); }, interval);
+    });
+
+    // Bouncing logo
+    (function(){
+      const el    = document.getElementById('bouncer');
+      const stage = document.getElementById('stage');
+      let vx = 3.1, vy = 2.9;
+      let x = 20,  y = 0;
+      let opened = false;
+
+      function bounds(){
+        const header   = document.querySelector('header');
+        const topLimit = (header?.getBoundingClientRect().height || 68) + 4;
+        const h        = opened ? (topLimit + stage.clientHeight) : window.innerHeight;
+        return { top: topLimit, bottom: h, left: 0, right: window.innerWidth };
+      }
+
+      function step(){
+        const b  = bounds();
+        const bw = el.offsetWidth, bh = el.offsetHeight;
+        if (y < b.top + 6) y = b.top + 6;
+        x += vx; y += vy;
+        if (x <= b.left)        { x = b.left;        vx *= -1; }
+        if (x + bw >= b.right)  { x = b.right - bw;  vx *= -1; }
+        if (y <= b.top)         { y = b.top;         vy *= -1; }
+        if (y + bh >= b.bottom) { y = b.bottom - bh; vy *= -1; }
+        el.style.transform = `translate(${x}px, ${y}px)`;
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+
+      const locked = document.getElementById('locked');
+      const gameSection = document.getElementById('runner')?.parentElement?.parentElement;
+      let gameInited = false;
+      el.addEventListener('click', ()=>{
+        if(!opened){ opened = true; locked.style.display='block'; }
+        if(!gameInited){ initRunner(); gameInited = true; }
+        gameSection && gameSection.scrollIntoView({behavior:'smooth'});
+      });
+    })();
+
+    // Game with coffee bean obstacles
+    function initRunner(){
+      const cvs = document.getElementById('runner'); const ctx = cvs.getContext('2d');
+      let running = true; const G = 0.6, JUMP = -11; const ground = cvs.height - 28;
+      const player = {x:80, y:ground, vy:0, w:56, h:56}; let obstacles = [];
+      const sprite = new Image(); sprite.src = 'assets/recurso.png';
+      const bean   = new Image(); bean.src   = 'assets/bean.png';
+
+      function reset(){ player.y=ground; player.vy=0; obstacles=[]; running=true; }
+      function spawn(){ const size = 26 + Math.random()*14; obstacles.push({x:cvs.width+20, y:ground, w:size, h:size, size}); }
+      let spawnGap = 0;
+
+      function draw(){
+        ctx.clearRect(0,0,cvs.width,cvs.height);
+        ctx.strokeStyle = 'rgba(0,0,0,.15)'; ctx.beginPath(); ctx.moveTo(0, ground+2); ctx.lineTo(cvs.width, ground+2); ctx.stroke();
+        if(sprite.complete && sprite.naturalWidth){ ctx.drawImage(sprite, player.x-14, player.y - player.h, player.w, player.h); }
+        else{ ctx.fillStyle = '#935c4d'; ctx.fillRect(player.x, player.y - player.h, player.w, player.h); }
+        obstacles.forEach(o=>{
+          if (bean.complete && bean.naturalWidth){
+            ctx.drawImage(bean, o.x - o.size/2, o.y - o.size, o.size, o.size);
+          } else {
+            ctx.fillStyle = '#6b3e2e';
+            ctx.beginPath();
+            ctx.ellipse(o.x, o.y - o.size/2, o.size/2.4, o.size/1.9, 0.4, 0, Math.PI*2);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(0,0,0,.25)';
+            ctx.beginPath();
+            ctx.moveTo(o.x - o.size/4, o.y - o.size);
+            ctx.quadraticCurveTo(o.x, o.y - o.size/2, o.x - o.size/6, o.y);
+            ctx.stroke();
+          }
+        });
+      }
+
+      function update(){
+        if(!running) return;
+        player.vy += G; player.y += player.vy; if(player.y > ground){ player.y = ground; player.vy = 0; }
+        const speed = 5.2; obstacles.forEach(o=> o.x -= speed); obstacles = obstacles.filter(o=> o.x + o.w > 0);
+        spawnGap -= speed; if(spawnGap <= 0){ spawn(); spawnGap = 240 + Math.random()*220; }
+        for(const o of obstacles){ if(player.x < o.x + o.w && player.x + player.w > o.x && player.y > o.y - o.h){ running = false; } }
+      }
+      (function loop(){ update(); draw(); requestAnimationFrame(loop); })();
+      function jump(){ if(player.y === ground){ player.vy = JUMP; } }
+      cvs.addEventListener('pointerdown', jump);
+      document.addEventListener('keydown', (e)=>{ if(e.code==='Space'){ e.preventDefault(); jump(); } if(e.code==='Enter' && !running){ reset(); } });
+      cvs.addEventListener('click', ()=>{ if(!running){ reset(); } });
+    }
+  </script>
+</body>
+</html>
