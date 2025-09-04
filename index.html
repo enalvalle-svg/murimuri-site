@@ -99,7 +99,7 @@
     .dock a, .dock span { font-weight:600; text-align:center }
     .dock small { display:block; color:var(--muted); font-size:.56rem; margin-top:2.5px; }
     .icon{ width:18px; height:18px; vertical-align:-3px; margin-right:6px; }
-    @media (max-width:640px){ #hours{ font-size:.9rem; opacity:.9 } }
+    @media (max-width:640px){ #hours{ font-size:.7rem; opacity:.9 } }
 
     footer{ padding:36px 0 48px; border-top:1px solid rgba(0,0,0,.06) }
     .footer-grid{ display:grid; gap:18px; grid-template-columns:2fr 1fr 1fr }
@@ -129,10 +129,10 @@
   <header>
     <div class="wrap nav">
       <!-- Brand now uses the actual logo image, not a text wordmark -->
-      <a class="brand" href="#top"><img id="brandLogo" src="assets/logo.png" alt="Muri Muri" /></a>
+      <a class="brand" href="#top"><img id="brandLogo" src="assets/logo.jpg" alt="Muri Muri" /></a>
       <!-- Hours: not clickable -->
       <nav><span id="hours" style="pointer-events:none; cursor:default;">Horario</span></nav>
-      <div style="text-align:right">
+      <div style="text-align:center">
         <a href="https://instagram.com/murimuricafe" target="_blank" rel="noopener">INSTAGRAM</a>
       </div>
     </div>
@@ -227,7 +227,7 @@
   <!-- ===== JSON CONFIG (edit this only) ===== -->
   <script id="site-config" type="application/json">
   {
-    "logo": "assets/logo.png",
+    "logo": "assets/logo.jpg",
     "hours": "Lu cerrado, Ma: 10-14, Mi-Do: 10-20",
     "address": {
       "text": "04100 Coyoacán, CDMX",
