@@ -6,7 +6,7 @@
   <title>Muri Muri — Café</title>
   <meta name="description" content="Muri Muri — café de especialidad en Coyoacán, CDMX." />
 
-  <!-- Favicon (set from JSON too) -->
+  <!-- Favicon (same as logo; also updated via JSON config) -->
   <link id="favicon" rel="icon" href="assets/logo.png" type="image/png" />
   <link id="appleicon" rel="apple-touch-icon" href="assets/logo.png" />
 
@@ -51,19 +51,20 @@
       backdrop-filter:saturate(1.1) blur(8px);
       border-bottom:1px solid rgba(0,0,0,.06);
     }
-    .nav{ display:grid; grid-template-columns:1fr auto 1fr; align-items:center; height:68px; }
+    .nav{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; height:68px; gap:14px; }
     .nav a{ font-weight:600 }
-    .brand .wordmark{ font-family:'Marfa','Space Grotesk',Inter,sans-serif; font-weight:700; letter-spacing:.06em; }
+    .brand img{ height:clamp(28px, 6.2vw, 42px); width:auto; display:block; }
 
     /* ===== Hero wrapper: limits sticky dock scope ===== */
     #heroWrap{ position:relative; }
 
-    /* Playfield: non-scrollable/touch */
+    /* Playfield (touchable again; non-scroll area) */
     .playfield{
       position:relative; width:100%;
       height:calc(100dvh - 68px - 68px); /* header + dock */
       overflow:hidden; background:var(--bg);
-      overscroll-behavior:contain; touch-action:none;
+      /* removed touch-action:none so it's touchable again */
+      overscroll-behavior:contain;
     }
 
     /* Bouncing logo (responsive) */
@@ -74,7 +75,7 @@
       cursor:pointer; z-index:2; will-change:transform;
     }
 
-    /* Photos: up to 5 visible */
+    /* Photos: up to 5 visible (no duplicates concurrently) */
     .photo{
       position:absolute; object-fit:cover; background:#fff;
       border:1px solid rgba(0,0,0,.08); box-shadow:0 8px 24px rgba(0,0,0,.12);
@@ -91,7 +92,7 @@
     }
     .dock .row{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); /* adapts to 4..6 items */
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
       align-items:center; justify-items:center;
       gap:8px; padding:10px 10px; min-height:68px;
     }
@@ -127,7 +128,8 @@
 <body>
   <header>
     <div class="wrap nav">
-      <div><a class="brand" href="#top"><span class="wordmark">MURI MURI</span></a></div>
+      <!-- Brand now uses the actual logo image, not a text wordmark -->
+      <a class="brand" href="#top"><img id="brandLogo" src="assets/logo.png" alt="Muri Muri" /></a>
       <!-- Hours: not clickable -->
       <nav><span id="hours" style="pointer-events:none; cursor:default;">Horario</span></nav>
       <div style="text-align:right">
@@ -143,7 +145,7 @@
       <!-- slideshow .photo nodes are injected by JS -->
     </section>
 
-    <!-- Dock (now includes Store/Blog links) -->
+    <!-- Dock -->
     <div class="dock">
       <div class="row">
         <a id="addrLink" href="#" target="_blank" rel="noopener">
@@ -207,7 +209,7 @@
     <footer>
       <div class="wrap footer-grid">
         <div>
-          <div class="brand"><span class="wordmark">MURI MURI</span></div>
+          <div class="brand"><img id="footerBrandLogo" src="assets/logo.png" alt="Muri Muri" style="height:28px;width:auto"/></div>
           <p class="tiny">© <span id="y"></span> Muri Muri. Todos los derechos reservados.</p>
         </div>
         <div><strong>Síguenos</strong><p><a href="https://instagram.com/murimuricafe" target="_blank" rel="noopener">@murimuricafe</a></p></div>
@@ -262,6 +264,8 @@
     (function applyConfig(){
       // Logo + favicon
       setIf($('#logo'), el => el.src = CONFIG.logo || el.src);
+      setIf($('#brandLogo'), el => el.src = CONFIG.logo || el.src);
+      setIf($('#footerBrandLogo'), el => el.src = CONFIG.logo || el.src);
       setIf($('#favicon'), el => el.href = CONFIG.logo || el.href);
       setIf($('#appleicon'), el => el.href = CONFIG.logo || el.href);
 
@@ -275,7 +279,7 @@
       // Contact
       const wa = CONFIG.whatsapp?.link || 'https://wa.me/525669657508';
       const waLbl = CONFIG.whatsapp?.label || 'WhatsApp';
-      setIf($('#waLink'), el => { el.href = wa; el.innerHTML += ''; });
+      setIf($('#waLink'), el => { el.href = wa; });
       setIf($('#waBtn'), el => el.href = wa);
       setIf($('#footerWa'), el => { el.href = wa; el.textContent = waLbl; });
 
@@ -286,19 +290,17 @@
 
       setIf($('#footerAddr'), el => el.textContent = (CONFIG.address && CONFIG.address.text) || el.textContent);
 
-      // Store / Blog links (support "#section" or external URL)
+      // Store / Blog links (hidden pages are revealed on click)
       function wireNav(anchor, spec){
         if(!anchor || !spec) return;
         anchor.addEventListener('click', (e)=>{
           e.preventDefault();
           const href = spec.link || '#';
           if (href.startsWith('#')){
-            // reveal hidden page section
             const target = $(href);
             if (target){
-              target.style.display = 'block';
-              // also ensure locked container is visible (if opened via link by user later)
               $('#locked').style.display = 'block';
+              target.style.display = 'block';            // reveal
               target.scrollIntoView({ behavior:'smooth' });
             }
           } else {
@@ -307,7 +309,7 @@
         });
       }
       wireNav($('#storeLink'), CONFIG.store);
-      wireNav($('#blogLink'), CONFIG.blog);
+      wireNav($('#blogLink'),  CONFIG.blog);
     })();
 
     // ===== Modal (Menu PDFs) =====
@@ -338,7 +340,9 @@
 
       function show(i){
         idx = (i + MENUS.length) % MENUS.length;
-        pdf.src = MENUS[idx] + '#page=1&toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0';
+        // Make the PDF render same size as the viewer:
+        // request page-fit; hide default chrome when possible
+        pdf.src = MENUS[idx] + '#zoom=page-fit&view=Fit&toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0';
       }
       content.querySelector('#mClose').onclick = ()=> modal.classList.remove('open');
       content.querySelector('#mPrev').onclick  = ()=> show(idx-1);
@@ -358,7 +362,7 @@
     $('#menuLink')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenu(0); });
     $('#openMenu')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenu(0); });
 
-    // ===== Slideshow: up to 5 visible =====
+    // ===== Slideshow: up to 5 visible, no duplicates concurrently =====
     (function initMultiSlideshow(){
       const field = $('#playfield'); if(!field) return;
       const PHOTO_URLS = Array.isArray(CONFIG.photos) && CONFIG.photos.length ? CONFIG.photos : [];
@@ -366,6 +370,7 @@
       const MAX_VISIBLE = 5;
       const SPAWN_EVERY = Math.max(200, Math.floor(LIFESPAN / MAX_VISIBLE));
 
+      // Create ONE node per photo (prevents duplicates by design)
       const nodes = PHOTO_URLS.map((src, i) => {
         const img = document.createElement('img');
         img.className = 'photo';
@@ -401,9 +406,11 @@
 
       let order = shuffle([...nodes.keys()]);
       let cursor = 0, lastIdx = -1;
+
       function nextIndex(){
         if(cursor >= order.length){
           order = shuffle([...nodes.keys()]);
+          // avoid immediate repeat across cycle boundary
           if(order.length>1 && order[0]===lastIdx){ [order[0],order[1]]=[order[1],order[0]]; }
           cursor = 0;
         }
@@ -411,17 +418,27 @@
         return lastIdx;
       }
 
-      const active = new Set();
+      const active = new Set(); // which photo indices are currently visible
+
       function spawnOne(){
-        while(active.size >= MAX_VISIBLE){
+        // never exceed MAX_VISIBLE
+        while(active.size >= Math.min(MAX_VISIBLE, nodes.length)){
           const first = active.values().next().value;
           nodes[first].classList.remove('show');
           active.delete(first);
         }
-        const idx = nextIndex(), img = nodes[idx];
+        // pick next non-active index
+        let idx = nextIndex();
+        let guard = 0;
+        while(active.has(idx) && guard++ < nodes.length){
+          idx = nextIndex();
+        }
+        const img = nodes[idx];
         active.add(idx);
+
         const {w,h} = randomSize(); placeRandom(img, w, h);
         requestAnimationFrame(()=> img.classList.add('show'));
+
         setTimeout(()=>{ img.classList.remove('show'); active.delete(idx); }, LIFESPAN);
       }
 
@@ -482,7 +499,6 @@
       let spawnGap=0;
 
       function draw(){
-        // canvas has CSS background set to var(--bg); clear keeps it visible
         ctx.clearRect(0,0,cvs.width,cvs.height);
         ctx.strokeStyle='rgba(0,0,0,.15)'; ctx.beginPath(); ctx.moveTo(0, ground+2); ctx.lineTo(cvs.width, ground+2); ctx.stroke();
         if(sprite.complete && sprite.naturalWidth){ ctx.drawImage(sprite, player.x-14, player.y-player.h, player.w, player.h); }
