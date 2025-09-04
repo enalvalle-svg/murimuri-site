@@ -61,7 +61,7 @@
     /* Playfield (touchable again; non-scroll area) */
     .playfield{
       position:relative; width:100%;
-      height:calc(100dvh - 68px - 68px); /* header + dock */
+      height:calc(90dvh - 60px - 60px); /* header + dock */
       overflow:hidden; background:var(--bg);
       /* removed touch-action:none so it's touchable again */
       overscroll-behavior:contain;
@@ -94,7 +94,7 @@
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
       align-items:center; justify-items:center;
-      gap:8px; padding:10px 10px; min-height:68px;
+      gap:10px; padding:20px 20px; min-height:80px;
     }
     .dock a, .dock span { font-weight:600; text-align:center }
     .dock small { display:block; color:var(--muted); font-size:.40rem; margin-top:1px; }
