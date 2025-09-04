@@ -1,1 +1,0 @@
-bulk-delete.md
