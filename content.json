@@ -1,0 +1,124 @@
+{
+  "brand": "MURI MURI",
+  "theme": {
+    "bg": "#FFF7F2",
+    "ink": "#0f0f0f",
+    "accent": "#eaad96",
+    "muted": "#6a6a6a",
+    "maxWidth": 1180
+  },
+  "fonts": {
+    "display": {
+      "name": "Marfa",
+      "src": "assets/fonts/ABCMARFA-SEMIBOLD-TRIAL.otf",
+      "weight": 700,
+      "style": "normal"
+    },
+    "body": {
+      "name": "MuriSans",
+      "src": "assets/fonts/Regular.ttf",
+      "weight": 400,
+      "style": "normal"
+    }
+  },
+  "contact": {
+    "email": "hola@murimuri.coffee",
+    "phone": "5669657508",
+    "whatsapp": "https://wa.me/525669657508",
+    "address_lines": [
+      "Higuera 87",
+      "Coyoacán, CDMX"
+    ],
+    "hours": [
+      {
+        "label": "Lun–Vie",
+        "value": "08:00–18:00"
+      },
+      {
+        "label": "Sáb",
+        "value": "09:00–18:00"
+      },
+      {
+        "label": "Dom",
+        "value": "Cerrado"
+      }
+    ],
+    "instagram": "https://instagram.com/murimuricafe",
+    "mapQuery": "Muri Muri Café Coyoacán"
+  },
+  "logo": {
+    "src": "assets/logo.jpg",
+    "text": "MURI MURI"
+  },
+  "images": [
+    {
+      "src": "assets/foto1.jpg",
+      "label": "Tienda",
+      "action": "shop"
+    },
+    {
+      "src": "assets/foto2.jpg",
+      "label": "Info",
+      "action": "info"
+    },
+    {
+      "src": "assets/foto3.jpg",
+      "label": "Mapa",
+      "action": "map"
+    },
+    {
+      "src": "assets/foto4.jpg",
+      "label": "Contacto",
+      "action": "contact"
+    },
+    {
+      "src": "assets/foto5.jpg",
+      "label": "Menú",
+      "action": "menu"
+    },
+    {
+      "src": "assets/foto6.jpg",
+      "label": "Mensual",
+      "action": null
+    },
+    {
+      "src": "assets/foto7.jpg",
+      "label": "7",
+      "action": null
+    },
+    {
+      "src": "assets/foto8.jpg",
+      "label": "8",
+      "action": null
+    }
+  ],
+  "menu": {
+    "pages": [
+      {
+        "img": "assets/menu_1.jpg",
+        "pdf": "assets/menu_1.pdf"
+      },
+      {
+        "img": "assets/menu_2.jpg",
+        "pdf": "assets/menu_2.pdf"
+      },
+      {
+        "img": "assets/menu_3.jpg",
+        "pdf": "assets/menu_3.pdf"
+      }
+    ]
+  },
+  "effects": {
+    "bubbles": {
+      "visibleSeconds": 10,
+      "baseIntervalSeconds": 10
+    },
+    "bounce": {
+      "vx": 3.2,
+      "vy": 3.0
+    },
+    "game": {
+      "speed": 5.2
+    }
+  }
+}
