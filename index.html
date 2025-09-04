@@ -227,7 +227,8 @@
   <!-- ===== JSON CONFIG (edit this only) ===== -->
   <script id="site-config" type="application/json">
   {
-    "logo": "assets/logo.jpg",
+    "logo": "assets/logo.png",
+    "logo2": "assets/logo.jpg",
     "hours": "Lu cerrado, Ma: 10-14, Mi-Do: 10-20",
     "address": {
       "text": "04100 Coyoacán, CDMX",
@@ -265,7 +266,7 @@
     (function applyConfig(){
       // Logo + favicon
       setIf($('#logo'), el => el.src = CONFIG.logo || el.src);
-      setIf($('#brandLogo'), el => el.src = CONFIG.logo || el.src);
+      setIf($('#brandLogo'), el => el.src = CONFIG.logo2 || el.src);
       setIf($('#footerBrandLogo'), el => el.src = CONFIG.logo || el.src);
       setIf($('#favicon'), el => el.href = CONFIG.logo || el.href);
       setIf($('#appleicon'), el => el.href = CONFIG.logo || el.href);
