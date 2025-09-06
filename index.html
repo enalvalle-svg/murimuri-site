@@ -153,8 +153,20 @@
     </section>
 
     <!-- Dock -->
+/* keep link styling clean */
+    <style>
+#addrLink { text-decoration: none; }
+
+/* underline just the address text */
+#addrText{
+  text-decoration: underline;
+  text-underline-offset: 3px;   
+  text-decoration-thickness: 2px;
+}
+    </style>
     <div class="dock">
       <div class="row">
+        
         <a id="addrLink" href="#" target="_blank" rel="noopener">
           <span id="addrText">Dirección</span>
           <small>(CÓMO LLEGAR)</small>
@@ -246,7 +258,8 @@
     "menu": [
       "assets/menu_1.pdf",
       "assets/menu_2.pdf",
-      "assets/menu_3.pdf"
+      "assets/menu_3.pdf", "assets/menu_3.pdf"
+    
     ],
     "photos": [
       "assets/foto1.jpg","assets/foto2.jpg","assets/foto3.jpg","assets/foto4.jpg",
@@ -381,7 +394,7 @@
         </div>
       `;
       const iframe = content.querySelector('#introPdf');
-      // Handle spaces in filename (e.g., "copy.pdf") safely
+      // Handle spaces in hfilename (e.g., "copy.pdf") safely
       const base = encodeURI(url);
       const params = '#zoom=page-fit&view=Fit&toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0';
       iframe.src = base + (base.includes('#') ? '' : params);
@@ -390,10 +403,10 @@
     }
   
     // Show it once the page finishes loading
-    window.addEventListener('load', () => {
-      openPdfModal('assets/cafes_lista_typewriter_pages2 copy.pdf');
-    });
-
+  //  window.addEventListener('load', () => {
+   //   openPdfModal('assets/cafes_lista_typewriter_pages2 copy.pdf');
+ //   });
+ 
     // ===== Slideshow: up to 5 visible, no duplicates concurrently =====
     (function initMultiSlideshow(){
       const field = $('#playfield'); if(!field) return;
