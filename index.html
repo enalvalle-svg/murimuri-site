@@ -242,7 +242,7 @@
   {
     "logo": "assets/logo.png",
     "logo2": "assets/logo.jpg",
-    "hours": "Lu: Cerrado /   Ma: 10-14 hr/ Mi-Do: 10-20 hr",
+    "hours": "Lu: Variable /   Ma: 10-14 hr/ Mi-Do: 10-20 hr",
     "address": {
       "text": "Coyoacán 04100, CDMX",
       "mapsUrl": "https://maps.google.com/?q=Muri%20Muri%20Caf%C3%A9%20Coyoac%C3%A1n"
@@ -410,8 +410,8 @@
     (function initMultiSlideshow(){
       const field = $('#playfield'); if(!field) return;
       const PHOTO_URLS = Array.isArray(CONFIG.photos) && CONFIG.photos.length ? CONFIG.photos : [];
-      const LIFESPAN = 15000;       // ms visible
-      const MAX_VISIBLE = 5;
+      const LIFESPAN = 10000;       // ms visible
+      const MAX_VISIBLE = 3;
       const SPAWN_EVERY = Math.max(200, Math.floor(LIFESPAN / MAX_VISIBLE));
 
       // Create ONE node per photo (prevents duplicates by design)
