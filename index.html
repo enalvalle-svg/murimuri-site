@@ -244,6 +244,9 @@
       <div class="tiny" style="text-align:center;"><small>Espacio o toque para saltar. Enter para reiniciar.</small></div>
     </section>
 
+    <span class="tiny">Visitas totales: <strong id="totalVisits">—</strong></span>
+
+
     <!-- Hidden Store page -->
     <!-- <section id="store" class="hiddenPage">
       <div class="wrap">
@@ -618,6 +621,19 @@
       document.addEventListener('keydown', (e)=>{ if(e.code==='Space'){ e.preventDefault(); jump(); } if(e.code==='Enter' && !running){ reset(); } });
       cvs.addEventListener('click', ()=>{ if(!running){ reset(); } });
     }
+    
+    (function(){
+      const el = document.getElementById('totalVisits');
+      if (!el) return;
+      const ns  = 'murimuri.coffee';         // namespace (use your domain)
+      const key = 'homepage_visits';         // any key you like
+      fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(ns)}/${encodeURIComponent(key)}`)
+        .then(r => r.json())
+        .then(d => { el.textContent = Number(d.value).toLocaleString('es-MX'); })
+        .catch(() => { el.textContent = '—'; });
+    })();
+
+    
   </script>
 </body>
 </html>
