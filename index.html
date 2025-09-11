@@ -152,9 +152,20 @@
       <!-- slideshow .photo nodes are injected by JS -->
     </section>
 
-    <!-- Dock -->
+    <!-- Dock //* keep link styling clean */-->
+    <style>
+#addrLink { text-decoration: none; }
+
+/* underline just the address text */
+#addrText{
+  text-decoration: underline;
+  text-underline-offset: 3px;   
+  text-decoration-thickness: 2px;
+}
+    </style>
     <div class="dock">
       <div class="row">
+        
         <a id="addrLink" href="#" target="_blank" rel="noopener">
           <span id="addrText">Dirección</span>
           <small>(CÓMO LLEGAR)</small>
@@ -168,7 +179,7 @@
             <path d="M18.1 15.9c-.3.8-1.6 1.6-2.3 1.7-.6.1-1.4.1-2.3-.1a9.8 9.8 0 0 1-4.7-2.6A10.7 10.7 0 0 1 5.9 9c-.2-1 .2-1.7.5-2.1.3-.4.7-.5 1.1-.5h.8c.2 0 .5.2.6.6l.7 1.7c.1.3 0 .6-.1.8l-.4.6-.2.3c-.1.1 0 .4.1.6.3.6.9 1.4 1.6 2.1.7.7 1.5 1.3 2.1 1.6.2.1.5.2.6.1l.3-.2.6-.4c.2-.1.5-.2.8-.1l1.7.7c.4.1.6.4.6.6 0 .4-.1.8-.2 1z" fill="#0f0f0f"/>
             <circle cx="12" cy="12" r="10" fill="none" stroke="#0f0f0f" stroke-width="1.5"/>
           </svg>
-          52 5669 6575 08
+          56 6965 7508
         </a>
         <nav><span id="hours" style="pointer-events:none; cursor:default;">Horario</span></nav>
         
@@ -231,7 +242,7 @@
   {
     "logo": "assets/logo.png",
     "logo2": "assets/logo.jpg",
-    "hours": "Lu: Cerrado/ Ma: 10-14/ Mi-Do: 10-20",
+    "hours": "Lu: Variable /   Ma: 10-14 hr/ Mi-Do: 10-20 hr",
     "address": {
       "text": "Coyoacán 04100, CDMX",
       "mapsUrl": "https://maps.google.com/?q=Muri%20Muri%20Caf%C3%A9%20Coyoac%C3%A1n"
@@ -246,7 +257,8 @@
     "menu": [
       "assets/menu_1.pdf",
       "assets/menu_2.pdf",
-      "assets/menu_3.pdf"
+      "assets/menu_3.pdf", "assets/cafes_lista_typewriter_pages2 copy.pdf"
+    
     ],
     "photos": [
       "assets/foto1.jpg","assets/foto2.jpg","assets/foto3.jpg","assets/foto4.jpg",
@@ -381,7 +393,7 @@
         </div>
       `;
       const iframe = content.querySelector('#introPdf');
-      // Handle spaces in filename (e.g., "copy.pdf") safely
+      // Handle spaces in hfilename (e.g., "copy.pdf") safely
       const base = encodeURI(url);
       const params = '#zoom=page-fit&view=Fit&toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0';
       iframe.src = base + (base.includes('#') ? '' : params);
@@ -390,16 +402,16 @@
     }
   
     // Show it once the page finishes loading
-    window.addEventListener('load', () => {
-      openPdfModal('assets/cafes_lista_typewriter_pages2 copy.pdf');
-    });
-
+   window.addEventListener('load', () => {
+   openPdfModal('/assets/0a213b74-ad2f-4f94-92b8-df839f8d62c1.jpeg');
+   });
+ 
     // ===== Slideshow: up to 5 visible, no duplicates concurrently =====
     (function initMultiSlideshow(){
       const field = $('#playfield'); if(!field) return;
       const PHOTO_URLS = Array.isArray(CONFIG.photos) && CONFIG.photos.length ? CONFIG.photos : [];
-      const LIFESPAN = 15000;       // ms visible
-      const MAX_VISIBLE = 5;
+      const LIFESPAN = 10000;       // ms visible
+      const MAX_VISIBLE = 3;
       const SPAWN_EVERY = Math.max(200, Math.floor(LIFESPAN / MAX_VISIBLE));
 
       // Create ONE node per photo (prevents duplicates by design)
