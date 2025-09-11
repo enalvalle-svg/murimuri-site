@@ -423,7 +423,7 @@
       // --- Open any PDF in the same modal (page-fit, minimal chrome) ---
     function openFileModal(url){
     modal.classList.add('open');
-    const isImage = /\.(png|jpe?g|webp|gif|avif|svg)$/i.test(url);
+    const isImage = /\.(png|jpeg|webp|gif|avif|svg)$/i.test(url);
 
     content.innerHTML = `
       <div class="viewer">
