@@ -590,7 +590,8 @@
       let running = true;
       const G=0.62, JUMP=-12.2;
       const ground = cvs.height - 28;
-      const player = {x:80, y:ground, vy:0, w:150, h:150};
+
+      const player = {x:80, y:ground, vy:0, w:150, h:150, hbW:46, hbH:70, hbOffX:52, hbOffY:8};
       let obstacles = [];
       let score = 0;
       let best = Number(localStorage.getItem(HS_KEY) || 0);
@@ -611,8 +612,8 @@
       }
 
       function spawn(){
-        const size = 26 + Math.random()*14;
-        obstacles.push({x: cvs.width+20, y: ground, w:size, h:size, size});
+        const size = 22 + Math.random()*10;
+        obstacles.push({x: cvs.width+20, y: ground, size, hb: size*0.55});
       }
       let spawnGap = 0;
 
@@ -664,20 +665,28 @@
         speed = baseSpeed + Math.min(4.5, framesSinceStart / 240);
 
         obstacles.forEach(o => o.x -= speed);
-        obstacles = obstacles.filter(o => o.x + o.w > 0);
+        obstacles = obstacles.filter(o => o.x + o.size > 0);
 
         spawnGap -= speed;
         if(spawnGap <= 0){
           spawn();
-          const minGap = Math.max(140, 260 - framesSinceStart/20);
+          const minGap = Math.max(150, 260 - framesSinceStart/20);
           spawnGap = minGap + Math.random()*180;
         }
 
         score += speed * 0.08;
         if(scoreEl) scoreEl.textContent = Math.floor(score);
 
+        const hbLeft   = player.x + player.hbOffX;
+        const hbRight  = hbLeft + player.hbW;
+        const hbTop    = (player.y - player.h) + player.hbOffY;
+        const hbBottom = hbTop + player.hbH;
+
         for(const o of obstacles){
-          if(player.x < o.x+o.w && player.x+player.w > o.x && player.y > o.y-o.h){
+          const oLeft = o.x - o.hb, oRight = o.x + o.hb;
+          const oTop = o.y - o.hb*2, oBottom = o.y;
+          const overlap = hbLeft < oRight && hbRight > oLeft && hbTop < oBottom && hbBottom > oTop;
+          if(overlap){
             running = false;
             if(score > best){
               best = score;
