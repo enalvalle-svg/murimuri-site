@@ -253,7 +253,7 @@
         </div>
         <canvas id="runner" width="960" height="260" aria-label="Juego: salta con espacio o toque"
                 style="width:100%;height:auto;max-width:960px;display:block;margin:0 auto;background:var(--bg);"></canvas>
-        <div class="tiny" style="text-align:center; margin-top:10px;"><small>Espacio o toque para saltar. Enter para reiniciar.</small></div>
+        <div class="tiny" style="text-align:center; margin-top:10px;"><small>Espacio o toque para saltar (mantén presionado para saltar más alto). Enter para reiniciar.</small></div>
       </div>
     </section>
 
@@ -370,7 +370,7 @@
     }
     $('#menuLink')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenu(0); });
 
-    // Flowing branded letter glyphs (m, u, r, i) spelling MURIMURI, cursor-reactive
+    // Flowing branded letter glyphs (m, u, r, i), one-directional conveyor left-to-right, mild cursor repulsion
     (function initFlowingLetters(){
       const field = $('#playfield'); if(!field) return;
       const glyphMap = {
@@ -380,7 +380,7 @@
         i: 'assets/letteri.png'
       };
       const letterKeys = ['m','u','r','i'];
-      const TOTAL_LETTERS = 18;
+      const TOTAL_LETTERS = 30;
       const sequence = Array.from({length: TOTAL_LETTERS}, () => letterKeys[Math.floor(Math.random()*letterKeys.length)]);
 
       const letters = sequence.map((ch) => {
@@ -394,12 +394,11 @@
       });
 
       const state = letters.map(() => ({
-        x: Math.random(), y: Math.random(),
-        vx: (Math.random()-0.5) * 0.0004,
-        vy: (Math.random()-0.5) * 0.0004,
-        driftAngle: Math.random()*Math.PI*2,
-        driftSpeed: 0.00006 + Math.random()*0.00012,
-        size: 34 + Math.random()*58
+        x: Math.random(),
+        y: Math.random(),
+        baseSpeed: 0.00035 + Math.random()*0.00035,
+        vy: 0,
+        size: 34 + Math.random()*50
       }));
 
       const mouse = { x:-9999, y:-9999, active:false };
@@ -423,38 +422,25 @@
           state.forEach((s, i) => {
             let px = s.x*fw, py = s.y*fh;
 
-            s.driftAngle += (Math.random()-0.5) * 0.03;
-            s.vx += Math.cos(s.driftAngle) * s.driftSpeed;
-            s.vy += Math.sin(s.driftAngle) * s.driftSpeed;
+            px += s.baseSpeed * fw;
 
             if(mouse.active){
               const dx = px - mouse.x, dy = py - mouse.y;
               const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-              const radius = 170;
+              const radius = 120;
               if(dist < radius){
                 const force = (1 - dist/radius) * 0.9;
-                s.vx += (dx/dist) * force * 0.025;
-                s.vy += (dy/dist) * force * 0.025;
+                s.vy += (dy/dist) * force * 0.006;
               }
             }
+            s.vy *= 0.94;
+            py += s.vy * fh;
 
             const margin = s.size;
-            const edgeZone = 90;
-            const edgePush = 0.0022;
-            if(px < edgeZone) s.vx += edgePush * (1 - px/edgeZone);
-            if(px > fw - margin - edgeZone) s.vx -= edgePush * (1 - (fw - margin - px)/edgeZone);
-            if(py < edgeZone) s.vy += edgePush * (1 - py/edgeZone);
-            if(py > fh - margin - edgeZone) s.vy -= edgePush * (1 - (fh - margin - py)/edgeZone);
+            if(py < 0){ py = 0; s.vy = Math.abs(s.vy) * 0.5; }
+            if(py > fh - margin){ py = fh - margin; s.vy = -Math.abs(s.vy) * 0.5; }
 
-            s.vx *= 0.965; s.vy *= 0.965;
-
-            px += s.vx * fw; py += s.vy * fh;
-
-            const bounce = 0.85;
-            if(px < 0){ px = 0; s.vx = Math.abs(s.vx) * bounce + 0.0006; }
-            if(px > fw - margin){ px = fw - margin; s.vx = -Math.abs(s.vx) * bounce - 0.0006; }
-            if(py < 0){ py = 0; s.vy = Math.abs(s.vy) * bounce + 0.0006; }
-            if(py > fh - margin){ py = fh - margin; s.vy = -Math.abs(s.vy) * bounce - 0.0006; }
+            if(px > fw){ px = -margin; py = Math.random() * (fh - margin); }
 
             s.x = px/fw; s.y = py/fh;
 
@@ -588,16 +574,23 @@
       const HS_KEY = 'murimuri_runner_highscore';
 
       let running = true;
-      const G=0.62, JUMP=-12.2;
+      const G = 0.62;
+      const JUMP_INITIAL = -10.5;
+      const JUMP_HOLD_FORCE = -0.55;
+      const JUMP_HOLD_MAX_FRAMES = 14;
       const ground = cvs.height - 28;
 
-      const player = {x:80, y:ground, vy:0, w:150, h:150, hbW:46, hbH:70, hbOffX:52, hbOffY:8};
+      const player = { x:80, y:ground, vy:0, w:150, h:150, hbW:70, hbH:100 };
       let obstacles = [];
       let score = 0;
       let best = Number(localStorage.getItem(HS_KEY) || 0);
       let baseSpeed = 5.0;
       let speed = baseSpeed;
       let framesSinceStart = 0;
+
+      let jumpHeld = false;
+      let jumpHoldFrames = 0;
+      let isJumping = false;
 
       const sprite=new Image(); sprite.src='assets/recurso.png';
       const bean=new Image(); bean.src='assets/bean.png';
@@ -608,14 +601,21 @@
         player.y = ground; player.vy = 0;
         obstacles = []; running = true;
         score = 0; speed = baseSpeed; framesSinceStart = 0;
+        isJumping = false; jumpHoldFrames = 0;
         if(scoreEl) scoreEl.textContent = '0';
       }
 
       function spawn(){
-        const size = 22 + Math.random()*10;
-        obstacles.push({x: cvs.width+20, y: ground, size, hb: size*0.55});
+        const size = 30 + Math.random()*14;
+        obstacles.push({x: cvs.width+20, y: ground, size, hb: size*0.85});
       }
       let spawnGap = 0;
+
+      function playerHitbox(){
+        const hbLeft = player.x + (player.w - player.hbW)/2 - 14;
+        const hbTop = (player.y - player.h) + (player.h - player.hbH)/2;
+        return { left: hbLeft, right: hbLeft + player.hbW, top: hbTop, bottom: hbTop + player.hbH };
+      }
 
       function draw(){
         ctx.clearRect(0,0,cvs.width,cvs.height);
@@ -659,8 +659,13 @@
         if(!running) return;
         framesSinceStart++;
 
+        if(isJumping && jumpHeld && jumpHoldFrames < JUMP_HOLD_MAX_FRAMES && player.vy < 0){
+          player.vy += JUMP_HOLD_FORCE;
+          jumpHoldFrames++;
+        }
+
         player.vy += G; player.y += player.vy;
-        if(player.y > ground){ player.y = ground; player.vy = 0; }
+        if(player.y > ground){ player.y = ground; player.vy = 0; isJumping = false; jumpHoldFrames = 0; }
 
         speed = baseSpeed + Math.min(4.5, framesSinceStart / 240);
 
@@ -677,15 +682,11 @@
         score += speed * 0.08;
         if(scoreEl) scoreEl.textContent = Math.floor(score);
 
-        const hbLeft   = player.x + player.hbOffX;
-        const hbRight  = hbLeft + player.hbW;
-        const hbTop    = (player.y - player.h) + player.hbOffY;
-        const hbBottom = hbTop + player.hbH;
-
+        const hb = playerHitbox();
         for(const o of obstacles){
           const oLeft = o.x - o.hb, oRight = o.x + o.hb;
-          const oTop = o.y - o.hb*2, oBottom = o.y;
-          const overlap = hbLeft < oRight && hbRight > oLeft && hbTop < oBottom && hbBottom > oTop;
+          const oTop = o.y - o.hb*1.8, oBottom = o.y;
+          const overlap = hb.left < oRight && hb.right > oLeft && hb.top < oBottom && hb.bottom > oTop;
           if(overlap){
             running = false;
             if(score > best){
@@ -699,11 +700,25 @@
 
       (function loop(){ update(); draw(); requestAnimationFrame(loop); })();
 
-      function jump(){ if(player.y === ground && running){ player.vy = JUMP; } }
-      cvs.addEventListener('pointerdown', jump);
+      function startJump(){
+        if(player.y === ground && running){
+          player.vy = JUMP_INITIAL;
+          isJumping = true;
+          jumpHeld = true;
+          jumpHoldFrames = 0;
+        }
+      }
+      function endJump(){ jumpHeld = false; }
+
+      cvs.addEventListener('pointerdown', startJump);
+      cvs.addEventListener('pointerup', endJump);
+      cvs.addEventListener('pointerleave', endJump);
       document.addEventListener('keydown', (e)=>{
-        if(e.code === 'Space'){ e.preventDefault(); jump(); }
+        if(e.code === 'Space'){ e.preventDefault(); if(!jumpHeld) startJump(); }
         if(e.code === 'Enter' && !running){ reset(); }
+      });
+      document.addEventListener('keyup', (e)=>{
+        if(e.code === 'Space'){ endJump(); }
       });
       cvs.addEventListener('click', ()=>{ if(!running){ reset(); } });
     }
