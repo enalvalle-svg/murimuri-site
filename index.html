@@ -193,6 +193,16 @@
     }
     .gameCard h3{ margin:0 0 4px; color:var(--accent-deep); }
     #runner{ border-radius:14px; }
+    .scoreRow{
+      display:flex; justify-content:center; gap:18px;
+      margin:0 0 12px; font-weight:700;
+    }
+    .scoreRow .pill{
+      padding:6px 14px; border-radius:999px;
+      background:#fff; border:1px solid rgba(43,36,32,.08);
+      font-size:.9rem;
+    }
+    .scoreRow .pill span{ color:var(--accent-deep); }
   </style>
 </head>
 <body>
@@ -237,6 +247,10 @@
       <div class="gameCard">
         <h3>¿Nos acompañas por un cafecito?</h3>
         <p class="tiny" style="margin:0 0 14px">Salta los granos de café y no te quemes con el espresso.</p>
+        <div class="scoreRow">
+          <span class="pill">Puntos: <span id="gameScore">0</span></span>
+          <span class="pill">Mejor de todos: <span id="gameBest">0</span></span>
+        </div>
         <canvas id="runner" width="960" height="260" aria-label="Juego: salta con espacio o toque"
                 style="width:100%;height:auto;max-width:960px;display:block;margin:0 auto;background:var(--bg);"></canvas>
         <div class="tiny" style="text-align:center; margin-top:10px;"><small>Espacio o toque para saltar. Enter para reiniciar.</small></div>
@@ -424,16 +438,23 @@
               }
             }
 
+            const margin = s.size;
+            const edgeZone = 90;
+            const edgePush = 0.0022;
+            if(px < edgeZone) s.vx += edgePush * (1 - px/edgeZone);
+            if(px > fw - margin - edgeZone) s.vx -= edgePush * (1 - (fw - margin - px)/edgeZone);
+            if(py < edgeZone) s.vy += edgePush * (1 - py/edgeZone);
+            if(py > fh - margin - edgeZone) s.vy -= edgePush * (1 - (fh - margin - py)/edgeZone);
+
             s.vx *= 0.965; s.vy *= 0.965;
 
             px += s.vx * fw; py += s.vy * fh;
 
-            const margin = s.size;
             const bounce = 0.85;
-            if(px < 0){ px = 0; s.vx *= -bounce; }
-            if(px > fw - margin){ px = fw - margin; s.vx *= -bounce; }
-            if(py < 0){ py = 0; s.vy *= -bounce; }
-            if(py > fh - margin){ py = fh - margin; s.vy *= -bounce; }
+            if(px < 0){ px = 0; s.vx = Math.abs(s.vx) * bounce + 0.0006; }
+            if(px > fw - margin){ px = fw - margin; s.vx = -Math.abs(s.vx) * bounce - 0.0006; }
+            if(py < 0){ py = 0; s.vy = Math.abs(s.vy) * bounce + 0.0006; }
+            if(py > fh - margin){ py = fh - margin; s.vy = -Math.abs(s.vy) * bounce - 0.0006; }
 
             s.x = px/fw; s.y = py/fh;
 
@@ -562,50 +583,128 @@
 
     function initRunner(){
       const cvs = document.getElementById('runner'); const ctx = cvs.getContext('2d');
-      let running = true; const G=0.6, JUMP=-11; const ground = cvs.height - 28;
-      const player = {x:80, y:ground, vy:0, w:150, h:150}; let obstacles=[];
+      const scoreEl = document.getElementById('gameScore');
+      const bestEl = document.getElementById('gameBest');
+      const HS_KEY = 'murimuri_runner_highscore';
+
+      let running = true;
+      const G=0.62, JUMP=-12.2;
+      const ground = cvs.height - 28;
+      const player = {x:80, y:ground, vy:0, w:150, h:150};
+      let obstacles = [];
+      let score = 0;
+      let best = Number(localStorage.getItem(HS_KEY) || 0);
+      let baseSpeed = 5.0;
+      let speed = baseSpeed;
+      let framesSinceStart = 0;
+
       const sprite=new Image(); sprite.src='assets/recurso.png';
       const bean=new Image(); bean.src='assets/bean.png';
 
-      function reset(){ player.y=ground; player.vy=0; obstacles=[]; running=true; }
-      function spawn(){ const size=26+Math.random()*14; obstacles.push({x:cvs.width+20,y:ground,w:size,h:size,size}); }
-      let spawnGap=0;
+      if(bestEl) bestEl.textContent = best;
+
+      function reset(){
+        player.y = ground; player.vy = 0;
+        obstacles = []; running = true;
+        score = 0; speed = baseSpeed; framesSinceStart = 0;
+        if(scoreEl) scoreEl.textContent = '0';
+      }
+
+      function spawn(){
+        const size = 26 + Math.random()*14;
+        obstacles.push({x: cvs.width+20, y: ground, w:size, h:size, size});
+      }
+      let spawnGap = 0;
 
       function draw(){
         ctx.clearRect(0,0,cvs.width,cvs.height);
-        ctx.strokeStyle='rgba(43,36,32,.15)'; ctx.beginPath(); ctx.moveTo(0, ground+2); ctx.lineTo(cvs.width, ground+2); ctx.stroke();
-        if(sprite.complete && sprite.naturalWidth){ ctx.drawImage(sprite, player.x-14, player.y-player.h, player.w, player.h); }
-        else{ ctx.fillStyle='#935c4d'; ctx.fillRect(player.x, player.y-player.h, player.w, player.h); }
+        ctx.strokeStyle='rgba(43,36,32,.15)';
+        ctx.beginPath(); ctx.moveTo(0, ground+2); ctx.lineTo(cvs.width, ground+2); ctx.stroke();
+
+        if(sprite.complete && sprite.naturalWidth){
+          ctx.drawImage(sprite, player.x-14, player.y-player.h, player.w, player.h);
+        } else {
+          ctx.fillStyle='#935c4d';
+          ctx.fillRect(player.x, player.y-player.h, player.w, player.h);
+        }
+
         obstacles.forEach(o=>{
-          if(bean.complete && bean.naturalWidth){ ctx.drawImage(bean, o.x-o.size/2, o.y-o.size, o.size, o.size); }
-          else{
+          if(bean.complete && bean.naturalWidth){
+            ctx.drawImage(bean, o.x-o.size/2, o.y-o.size, o.size, o.size);
+          } else {
             ctx.fillStyle='#6b3e2e';
             ctx.beginPath(); ctx.ellipse(o.x, o.y-o.size/2, o.size/2.4, o.size/1.9, 0.4, 0, Math.PI*2); ctx.fill();
             ctx.strokeStyle='rgba(0,0,0,.25)'; ctx.beginPath();
             ctx.moveTo(o.x-o.size/4, o.y-o.size); ctx.quadraticCurveTo(o.x, o.y-o.size/2, o.x-o.size/6, o.y); ctx.stroke();
           }
         });
+
+        if(!running){
+          ctx.fillStyle='rgba(43,36,32,.55)';
+          ctx.fillRect(0,0,cvs.width,cvs.height);
+          ctx.fillStyle='#fff9f2';
+          ctx.textAlign='center';
+          ctx.font='bold 28px sans-serif';
+          ctx.fillText('¡Se te quemó el café!', cvs.width/2, cvs.height/2 - 18);
+          ctx.font='16px sans-serif';
+          ctx.fillText(`Puntos: ${Math.floor(score)}  ·  Mejor: ${Math.floor(best)}`, cvs.width/2, cvs.height/2 + 12);
+          ctx.font='14px sans-serif';
+          ctx.fillText('Toca o presiona Enter para reintentar', cvs.width/2, cvs.height/2 + 38);
+          ctx.textAlign='left';
+        }
       }
+
       function update(){
         if(!running) return;
-        player.vy += G; player.y += player.vy; if(player.y>ground){ player.y=ground; player.vy=0; }
-        const speed=5.2; obstacles.forEach(o=> o.x -= speed); obstacles = obstacles.filter(o=> o.x + o.w > 0);
-        spawnGap -= speed; if(spawnGap<=0){ spawn(); spawnGap = 240 + Math.random()*220; }
-        for(const o of obstacles){ if(player.x<o.x+o.w && player.x+player.w>o.x && player.y>o.y-o.h){ running=false; } }
+        framesSinceStart++;
+
+        player.vy += G; player.y += player.vy;
+        if(player.y > ground){ player.y = ground; player.vy = 0; }
+
+        speed = baseSpeed + Math.min(4.5, framesSinceStart / 240);
+
+        obstacles.forEach(o => o.x -= speed);
+        obstacles = obstacles.filter(o => o.x + o.w > 0);
+
+        spawnGap -= speed;
+        if(spawnGap <= 0){
+          spawn();
+          const minGap = Math.max(140, 260 - framesSinceStart/20);
+          spawnGap = minGap + Math.random()*180;
+        }
+
+        score += speed * 0.08;
+        if(scoreEl) scoreEl.textContent = Math.floor(score);
+
+        for(const o of obstacles){
+          if(player.x < o.x+o.w && player.x+player.w > o.x && player.y > o.y-o.h){
+            running = false;
+            if(score > best){
+              best = score;
+              localStorage.setItem(HS_KEY, String(Math.floor(best)));
+              if(bestEl) bestEl.textContent = Math.floor(best);
+            }
+          }
+        }
       }
+
       (function loop(){ update(); draw(); requestAnimationFrame(loop); })();
-      function jump(){ if(player.y===ground){ player.vy=JUMP; } }
+
+      function jump(){ if(player.y === ground && running){ player.vy = JUMP; } }
       cvs.addEventListener('pointerdown', jump);
-      document.addEventListener('keydown', (e)=>{ if(e.code==='Space'){ e.preventDefault(); jump(); } if(e.code==='Enter' && !running){ reset(); } });
+      document.addEventListener('keydown', (e)=>{
+        if(e.code === 'Space'){ e.preventDefault(); jump(); }
+        if(e.code === 'Enter' && !running){ reset(); }
+      });
       cvs.addEventListener('click', ()=>{ if(!running){ reset(); } });
     }
 
     (function(){
       const el = document.getElementById('totalVisits');
       if (!el) return;
-      const ns  = 'murimuri.coffee';
+      const ns  = 'murimuri-coffee';
       const key = 'homepage_visits';
-      fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(ns)}/${encodeURIComponent(key)}`)
+      fetch(`https://countapi.mileshilliard.com/api/v1/hit/${encodeURIComponent(ns)}/${encodeURIComponent(key)}`)
         .then(r => r.json())
         .then(d => { el.textContent = Number(d.value).toLocaleString('es-MX'); })
         .catch(() => { el.textContent = '—'; });
