@@ -359,13 +359,15 @@
     // Flowing branded letter glyphs (m, u, r, i) spelling MURIMURI, cursor-reactive
     (function initFlowingLetters(){
       const field = $('#playfield'); if(!field) return;
-      const sequence = ['m','u','r','i','m','u','r','i'];
       const glyphMap = {
         m: 'assets/letterm.png',
         u: 'assets/letteru.png',
         r: 'assets/letterr.png',
         i: 'assets/letteri.png'
       };
+      const letterKeys = ['m','u','r','i'];
+      const TOTAL_LETTERS = 18;
+      const sequence = Array.from({length: TOTAL_LETTERS}, () => letterKeys[Math.floor(Math.random()*letterKeys.length)]);
 
       const letters = sequence.map((ch) => {
         const img = document.createElement('img');
@@ -379,10 +381,11 @@
 
       const state = letters.map(() => ({
         x: Math.random(), y: Math.random(),
-        vx: 0, vy: 0,
+        vx: (Math.random()-0.5) * 0.0004,
+        vy: (Math.random()-0.5) * 0.0004,
         driftAngle: Math.random()*Math.PI*2,
-        driftSpeed: 0.00008 + Math.random()*0.00007,
-        size: 46 + Math.random()*46
+        driftSpeed: 0.00006 + Math.random()*0.00012,
+        size: 34 + Math.random()*58
       }));
 
       const mouse = { x:-9999, y:-9999, active:false };
@@ -406,7 +409,7 @@
           state.forEach((s, i) => {
             let px = s.x*fw, py = s.y*fh;
 
-            s.driftAngle += (Math.random()-0.5) * 0.02;
+            s.driftAngle += (Math.random()-0.5) * 0.03;
             s.vx += Math.cos(s.driftAngle) * s.driftSpeed;
             s.vy += Math.sin(s.driftAngle) * s.driftSpeed;
 
@@ -416,8 +419,8 @@
               const radius = 170;
               if(dist < radius){
                 const force = (1 - dist/radius) * 0.9;
-                s.vx += (dx/dist) * force * 0.06;
-                s.vy += (dy/dist) * force * 0.06;
+                s.vx += (dx/dist) * force * 0.025;
+                s.vy += (dy/dist) * force * 0.025;
               }
             }
 
@@ -426,10 +429,11 @@
             px += s.vx * fw; py += s.vy * fh;
 
             const margin = s.size;
-            if(px < 0){ px = 0; s.vx *= -0.6; }
-            if(px > fw - margin){ px = fw - margin; s.vx *= -0.6; }
-            if(py < 0){ py = 0; s.vy *= -0.6; }
-            if(py > fh - margin){ py = fh - margin; s.vy *= -0.6; }
+            const bounce = 0.85;
+            if(px < 0){ px = 0; s.vx *= -bounce; }
+            if(px > fw - margin){ px = fw - margin; s.vx *= -bounce; }
+            if(py < 0){ py = 0; s.vy *= -bounce; }
+            if(py > fh - margin){ py = fh - margin; s.vy *= -bounce; }
 
             s.x = px/fw; s.y = py/fh;
 
