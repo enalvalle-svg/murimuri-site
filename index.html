@@ -563,7 +563,7 @@
     function initRunner(){
       const cvs = document.getElementById('runner'); const ctx = cvs.getContext('2d');
       let running = true; const G=0.6, JUMP=-11; const ground = cvs.height - 28;
-      const player = {x:80, y:ground, vy:0, w:56, h:56}; let obstacles=[];
+      const player = {x:80, y:ground, vy:0, w:100, h:100}; let obstacles=[];
       const sprite=new Image(); sprite.src='assets/recurso.png';
       const bean=new Image(); bean.src='assets/bean.png';
 
