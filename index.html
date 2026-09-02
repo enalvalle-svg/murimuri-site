@@ -380,7 +380,7 @@
         i: 'assets/letteri.png'
       };
       const letterKeys = ['m','u','r','i'];
-      const TOTAL_LETTERS = 80;
+      const TOTAL_LETTERS = 70;
       const sequence = Array.from({length: TOTAL_LETTERS}, () => letterKeys[Math.floor(Math.random()*letterKeys.length)]);
 
       const letters = sequence.map((ch) => {
@@ -680,8 +680,8 @@
         spawnGap -= speed;
         if(spawnGap <= 0){
           spawn();
-          const minGap = Math.max(150, 260 - framesSinceStart/20);
-          spawnGap = minGap + Math.random()*180;
+          const minGap = Math.max(170, 340 - framesSinceStart/12);
+          spawnGap = minGap + Math.random()*220;
         }
 
         score += speed * 0.08;
