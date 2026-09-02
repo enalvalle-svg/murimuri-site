@@ -380,7 +380,7 @@
         i: 'assets/letteri.png'
       };
       const letterKeys = ['m','u','r','i'];
-      const TOTAL_LETTERS = 30;
+      const TOTAL_LETTERS = 60;
       const sequence = Array.from({length: TOTAL_LETTERS}, () => letterKeys[Math.floor(Math.random()*letterKeys.length)]);
 
       const letters = sequence.map((ch) => {
@@ -580,7 +580,7 @@
       const JUMP_HOLD_MAX_FRAMES = 14;
       const ground = cvs.height - 28;
 
-      const player = { x:80, y:ground, vy:0, w:150, h:150, hbW:50, hbH:80 };
+      const player = { x:60, y:ground, vy:0, w:100, h:150, hbW:50, hbH:80 };
       let obstacles = [];
       let score = 0;
       let best = Number(localStorage.getItem(HS_KEY) || 0);
@@ -606,7 +606,7 @@
       }
 
       function spawn(){
-        const size = 60 + Math.random()*14;
+        const size = 30 + Math.random()*14;
         obstacles.push({x: cvs.width+20, y: ground, size, hb: size*0.85});
       }
       let spawnGap = 0;
