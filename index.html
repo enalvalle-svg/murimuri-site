@@ -370,7 +370,7 @@
     }
     $('#menuLink')?.addEventListener('click', (e)=>{ e.preventDefault(); openMenu(0); });
 
-    // Flowing branded letter glyphs (m, u, r, i), one-directional conveyor left-to-right, mild cursor repulsion
+    // Flowing branded letter glyphs (m, u, r, i), one-directional conveyor left-to-right, very mild cursor repulsion
     (function initFlowingLetters(){
       const field = $('#playfield'); if(!field) return;
       const glyphMap = {
@@ -380,7 +380,7 @@
         i: 'assets/letteri.png'
       };
       const letterKeys = ['m','u','r','i'];
-      const TOTAL_LETTERS = 60;
+      const TOTAL_LETTERS = 80;
       const sequence = Array.from({length: TOTAL_LETTERS}, () => letterKeys[Math.floor(Math.random()*letterKeys.length)]);
 
       const letters = sequence.map((ch) => {
@@ -397,6 +397,7 @@
         x: Math.random(),
         y: Math.random(),
         baseSpeed: 0.00035 + Math.random()*0.00035,
+        vx: 0,
         vy: 0,
         size: 34 + Math.random()*50
       }));
@@ -431,9 +432,12 @@
               if(dist < radius){
                 const force = (1 - dist/radius) * 0.9;
                 s.vy += (dy/dist) * force * 0.006;
+                s.vx += (dx/dist) * force * 0.0015;
               }
             }
+            s.vx *= 0.94;
             s.vy *= 0.94;
+            px += s.vx * fw;
             py += s.vy * fh;
 
             const margin = s.size;
@@ -441,6 +445,7 @@
             if(py > fh - margin){ py = fh - margin; s.vy = -Math.abs(s.vy) * 0.5; }
 
             if(px > fw){ px = -margin; py = Math.random() * (fh - margin); }
+            if(px < -margin){ px = -margin; }
 
             s.x = px/fw; s.y = py/fh;
 
@@ -580,7 +585,7 @@
       const JUMP_HOLD_MAX_FRAMES = 14;
       const ground = cvs.height - 28;
 
-      const player = { x:60, y:ground, vy:0, w:100, h:150, hbW:50, hbH:80 };
+      const player = { x:60, y:ground, vy:0, w:100, h:150, hbW:36, hbH:60 };
       let obstacles = [];
       let score = 0;
       let best = Number(localStorage.getItem(HS_KEY) || 0);
