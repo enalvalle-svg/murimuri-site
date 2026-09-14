@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Archivo de cafés — Muri Muri</title>
+  <meta name="description" content="Archivo de los cafés que han pasado por Muri Muri: origen, productores, comunidades, procesos y cosechas." />
+  <link rel="icon" href="../assets/logo.png" type="image/png" />
+  <style>
+    @font-face{font-family:'Marfa';src:url('../assets/fonts/ABCMARFA-SEMIBOLD-TRIAL.otf') format('opentype');font-weight:700;font-display:swap}
+    @font-face{font-family:'MuriSans';src:url('../assets/fonts/Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+    :root{--bg:#fff1eb;--ink:#2f7189;--peach:#f7cd99;--coral:#ef8f78;--mint:#cfe8c9;--green:#72ad67;--rose:#f6d1dc;--pink:#e8799f;--rule:rgba(47,113,137,.28);--max:1180px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'MuriSans',Arial,sans-serif;line-height:1.45}a{color:inherit;text-decoration:none}.wrap{max-width:var(--max);margin:auto;padding:0 22px}
+    header{position:sticky;top:0;z-index:20;background:rgba(255,241,235,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}.bar{height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand img{height:34px}.nav{display:flex;gap:18px;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+    .hero{padding:72px 0 42px;border-bottom:1px solid var(--rule)}.eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;margin:0 0 12px}.hero h1{font-family:'Marfa',sans-serif;text-transform:uppercase;font-size:clamp(3rem,11vw,8.5rem);line-height:.82;margin:0;letter-spacing:-.035em}.hero-grid{display:grid;grid-template-columns:2fr 1fr;gap:30px;align-items:end}.hero-note{font-size:clamp(1rem,2vw,1.3rem);max-width:420px}
+    .muri-band{overflow:hidden;background:var(--peach);color:var(--coral);border-bottom:1px solid var(--coral)}.muri-track{font-family:'Marfa',sans-serif;font-size:clamp(2.2rem,6vw,5rem);white-space:nowrap;line-height:1;padding:10px 0;animation:drift 24s linear infinite}@keyframes drift{to{transform:translateX(-35%)}}
+    .toolbar{padding:24px 0;border-bottom:1px solid var(--rule);display:flex;gap:10px;flex-wrap:wrap}.filter{border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;padding:8px 14px;font:inherit;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;cursor:pointer}.filter.active{background:var(--ink);color:var(--bg)}
+    .archive{padding:28px 0 80px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{min-height:430px;border:1px solid currentColor;padding:18px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .25s ease,box-shadow .25s ease}.card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,.08)}.card:nth-child(4n+1){background:var(--peach);color:var(--coral)}.card:nth-child(4n+2){background:var(--mint);color:var(--green)}.card:nth-child(4n+3){background:var(--rose);color:var(--pink)}.card:nth-child(4n){background:var(--bg);color:var(--ink)}
+    .meta{font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;display:flex;justify-content:space-between;gap:12px}.card h2{font-family:'Marfa',sans-serif;text-transform:uppercase;font-size:clamp(1.7rem,4vw,3rem);line-height:.92;margin:16px 0 8px}.producer{font-size:1.05rem;margin:0}.variety{font-style:italic;margin:8px 0 0}.facts{border-top:1px solid currentColor;margin-top:24px}.fact{display:grid;grid-template-columns:95px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid currentColor;font-size:.78rem}.fact b{text-transform:uppercase;letter-spacing:.06em;font-size:.66rem}.cta{margin-top:18px;display:flex;justify-content:space-between;text-transform:uppercase;font-size:.73rem;letter-spacing:.08em}
+    .empty{padding:60px 0;text-align:center}.history-note{padding:34px 0 60px;border-top:1px solid var(--rule);display:grid;grid-template-columns:1fr 2fr;gap:30px}.history-note h2{font-family:'Marfa',sans-serif;text-transform:uppercase;font-size:clamp(2rem,5vw,4rem);margin:0;line-height:.9}.history-note p{max-width:650px;margin:0;font-size:1.05rem}
+    footer{border-top:1px solid var(--rule);padding:28px 0 44px;font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    @media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.hero-grid,.history-note{grid-template-columns:1fr}.hero-note{max-width:none}}
+    @media(max-width:560px){.grid{grid-template-columns:1fr}.card{min-height:370px}.nav a:nth-child(2){display:none}.hero{padding-top:46px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.muri-track{animation:none}.card{transition:none}}
+  </style>
+</head>
+<body>
+<header><div class="wrap bar"><a class="brand" href="../index.html"><img src="../assets/logo.png" alt="Muri Muri" /></a><nav class="nav"><a href="../index.html">Inicio</a><a href="../passport/">Pasaporte</a></nav></div></header>
+<main>
+  <section class="hero"><div class="wrap hero-grid"><div><p class="eyebrow">Archivo vivo / café / relaciones</p><h1>Todos los cafés</h1></div><p class="hero-note">Un registro de los cafés que han pasado por Muri Muri, las personas y comunidades detrás de ellos, y cómo cambian cosecha tras cosecha.</p></div></section>
+  <div class="muri-band" aria-hidden="true"><div class="muri-track">MURI MURI MURI MURI MURI MURI MURI MURI MURI MURI</div></div>
+  <div class="wrap toolbar" id="filters"><button class="filter active" data-filter="all">Todos</button><button class="filter" data-filter="current">Actuales</button><button class="filter" data-filter="past">Archivo</button></div>
+  <section class="wrap archive"><div id="grid" class="grid"></div><div id="empty" class="empty" hidden>No hay cafés en esta vista.</div></section>
+  <section class="wrap history-note"><h2>La historia también está en la repetición.</h2><p>Cuando volvemos a trabajar con una misma finca, productor o comunidad, no empezamos desde cero. El archivo conecta cosechas para que puedas ver qué cambió, qué se mantuvo y cómo evoluciona nuestra relación con cada origen.</p></section>
+</main>
+<footer class="wrap"><span>© <span id="year"></span> Muri Muri</span><a href="https://instagram.com/murimuricafe" target="_blank" rel="noopener">@murimuricafe ↗</a></footer>
+<script>
+const grid=document.getElementById('grid');const empty=document.getElementById('empty');document.getElementById('year').textContent=new Date().getFullYear();
+const esc=s=>{const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML};
+let coffees=[];
+function card(c){const origin=c.origin||{},why=c.why||{},producer=c.producer||{};const current=c.status==='current';return `<a class="card" data-status="${current?'current':'past'}" href="../passport/?coffee=${encodeURIComponent(c.slug)}"><div><div class="meta"><span>${esc(c.harvestYear||'')}</span><span>${current?'En barra':'Archivo'}</span></div><h2>${esc(c.name)}</h2><p class="producer">${esc(producer.name||'')}</p>${why.variety?`<p class="variety">${esc(why.variety)}</p>`:''}</div><div><div class="facts">${origin.region?`<div class="fact"><b>Origen</b><span>${esc(origin.region)}</span></div>`:''}${why.process?`<div class="fact"><b>Proceso</b><span>${esc(why.process)}</span></div>`:''}${why.altitudeMeters?`<div class="fact"><b>Altitud</b><span>${esc(why.altitudeMeters)} m</span></div>`:''}</div><div class="cta"><span>Ver historia</span><span>↗</span></div></div></a>`}
+function render(filter='all'){const list=coffees.filter(c=>filter==='all'||(filter==='current'?c.status==='current':c.status!=='current'));grid.innerHTML=list.map(card).join('');empty.hidden=!!list.length}
+document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render(b.dataset.filter)});
+fetch('../passport/coffees.json').then(r=>r.json()).then(data=>{coffees=Object.entries(data.coffees||{}).map(([slug,c])=>({...c,slug})).sort((a,b)=>(b.harvestYear||0)-(a.harvestYear||0));render()}).catch(()=>{empty.hidden=false;empty.textContent='No pudimos cargar el archivo.'});
+</script>
+</body>
+</html>
