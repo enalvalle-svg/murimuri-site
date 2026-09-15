@@ -1,0 +1,30 @@
+document.getElementById('year').textContent=new Date().getFullYear();
+const intro=document.getElementById('intro');
+const stage=document.getElementById('introStage');
+const assets={m:'assets/letterm.png',u:'assets/letteru.png',r:'assets/letterr.png',i:'assets/letteri.png'};
+const sequence='murimuri'.split('');
+let assembling=false;
+const spots=[['11%','16%'],['79%','14%'],['22%','72%'],['82%','66%'],['49%','13%'],['9%','45%'],['65%','46%'],['43%','76%']];
+const letters=[];
+sequence.forEach((ch,i)=>{const img=document.createElement('img');img.src=assets[ch];img.className='intro-letter';img.style.left=spots[i][0];img.style.top=spots[i][1];img.style.animationDelay=`${i*.35}s`;img.onclick=assembleLogo;stage.appendChild(img);letters.push(img)});
+function layoutRow(row,top,h,gap){const widths=row.map(img=>(img.naturalWidth/img.naturalHeight)*h);const total=widths.reduce((a,b)=>a+b,0)+gap*(row.length-1);let x=(stage.clientWidth-total)/2;row.forEach((img,j)=>{img.style.height=h+'px';img.style.left=(x+widths[j]/2)+'px';img.style.top=top+'px';img.style.transform='rotate(0)';x+=widths[j]+gap})}
+function assembleLogo(){if(assembling)return;assembling=true;intro.classList.add('assembling');const h=Math.max(58,Math.min(88,stage.clientWidth*.18));const gap=Math.max(10,Math.min(18,stage.clientWidth*.03));layoutRow(letters.slice(0,4),stage.clientHeight*.40,h,gap);layoutRow(letters.slice(4,8),stage.clientHeight*.56,h,gap);setTimeout(finishIntro,1750)}
+function finishIntro(){intro.classList.add('done');sessionStorage.setItem('muriIntroSeen','1')}
+document.getElementById('skipIntro').onclick=finishIntro;
+if(sessionStorage.getItem('muriIntroSeen'))intro.classList.add('done');
+const menuFiles=['assets/menu_1.pdf','assets/menu_2.pdf','assets/menu_3.pdf','assets/cafes_lista_typewriter_pages2 copy.pdf'];
+let menuIndex=0;
+const modal=document.getElementById('menuModal');
+const frame=document.getElementById('menuFrame');
+function showMenu(i=0){menuIndex=(i+menuFiles.length)%menuFiles.length;frame.src=encodeURI(menuFiles[menuIndex])+'#zoom=page-fit&view=Fit&toolbar=0';modal.classList.add('open')}
+document.querySelectorAll('[data-open-menu]').forEach(b=>b.onclick=()=>showMenu(0));
+document.getElementById('menuClose').onclick=()=>modal.classList.remove('open');
+document.getElementById('menuPrev').onclick=()=>showMenu(menuIndex-1);
+document.getElementById('menuNext').onclick=()=>showMenu(menuIndex+1);
+modal.onclick=e=>{if(e.target===modal)modal.classList.remove('open')};
+const wipe=document.getElementById('pageWipe');
+window.addEventListener('pageshow',()=>wipe.classList.remove('go'));
+window.addEventListener('pagehide',()=>wipe.classList.remove('go'));
+document.querySelectorAll('a.internal').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();wipe.classList.remove('go');void wipe.offsetWidth;wipe.classList.add('go');setTimeout(()=>location.href=a.href,470)}));
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.animate([{opacity:.2,transform:'translateY(20px)'},{opacity:1,transform:'translateY(0)'}],{duration:700,easing:'cubic-bezier(.2,.8,.2,1)',fill:'both'});obs.unobserve(e.target)}}),{threshold:.18});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
