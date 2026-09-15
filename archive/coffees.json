@@ -19,25 +19,6 @@
         {"year": 2026, "summary": "Espresso actual de Muri Muri: Typica y Marsellesa, lavado, 1500 msnm."}
       ]
     },
-    "san-juan-juquila-vijanos-ramiro-dominguez-2026": {
-      "name": "San Juan Juquila Vijanos",
-      "harvestYear": 2026,
-      "status": "current",
-      "service": "Espresso",
-      "producer": "Ramiro Dominguez",
-      "community": "San Juan Juquila Vijanos",
-      "origin": "Sierra Norte, Oaxaca",
-      "country": "México",
-      "altitudeMeters": 1500,
-      "variety": "Typica y Marsellesa",
-      "process": "Lavado",
-      "image": "../assets/current-espresso.jpg",
-      "tastingNotes": ["té limón", "miel", "cuerpo ligero", "nuez"],
-      "relationship": "La historia de la relación con este productor y comunidad se está documentando. Preferimos publicar esta parte sólo cuando esté verificada.",
-      "history": [
-        {"year": 2026, "summary": "Espresso actual de Muri Muri: Typica y Marsellesa, lavado, 1500 msnm."}
-      ]
-    },
     "rincon-toningo-comunitario-2026": {
       "name": "Lote Comunitario — Rincón Toningo",
       "harvestYear": 2026,
