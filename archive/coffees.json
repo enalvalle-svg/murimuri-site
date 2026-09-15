@@ -14,12 +14,11 @@
       "process": "Lavado",
       "image": "../assets/current-espresso.jpg",
       "tastingNotes": ["té limón", "miel", "cuerpo ligero", "nuez"],
-      "originStory": "San Juan Juquila Vijanos es una comunidad rural zapoteca de la Sierra de Juárez o Sierra Norte de Oaxaca, rodeada por bosque mesófilo de montaña. La comunidad alberga pequeños productores que cultivan café bajo sombra natural en parcelas distribuidas por la zona montañosa.",
-      "productionStory": "El documento de la comunidad describe pequeñas parcelas, una zona de producción entre aproximadamente 900 y 1300–1400 msnm y el cultivo de variedades como Typica, Marsellesa, Mundo Novo, Caturra y Geisha. También señala que el cultivo se realiza sin fertilizantes químicos industrializados y con buenas prácticas agrícolas.",
-      "sourceNote": "La etiqueta de este lote indica 1500 msnm. El documento comunitario describe la localidad alrededor de 1540 msnm y zonas de producción entre 900 y 1300–1400 msnm; mantenemos ambos datos separados porque corresponden a fuentes y escalas distintas.",
-      "relationship": "La historia específica de la relación de Muri Muri con Ramiro Dominguez y la comunidad se está documentando. Preferimos publicarla sólo cuando esté verificada.",
+      "originStory": "San Juan Juquila Vijanos es una comunidad zapoteca en la Sierra Norte de Oaxaca, rodeada por bosque mesófilo de montaña. El café forma parte de la vida cotidiana de muchas familias de la comunidad y se cultiva bajo sombra natural, en pequeñas parcelas repartidas entre las laderas.",
+      "productionStory": "La geografía de Juquila hace que el trabajo sea muy distinto al de una finca grande y continua: las parcelas son pequeñas, están separadas entre sí y cambian de altura a lo largo de la montaña. En esta zona conviven variedades como Typica, Marsellesa, Mundo Novo, Caturra y Geisha. El cultivo se realiza con buenas prácticas agrícolas y sin fertilizantes químicos industrializados, cuidando una relación muy cercana con el bosque y el entorno.",
+      "relationship": "Este lote de Ramiro Dominguez nos gusta porque concentra muchas de las cosas que hacen especial a Juquila: una comunidad cafetalera de montaña, variedades tradicionales y un trabajo de pequeña escala. En taza encontramos té limón, miel, un cuerpo ligero y nuez; una combinación que funciona especialmente bien como espresso.",
       "history": [
-        {"year": 2026, "summary": "Espresso actual de Muri Muri: Typica y Marsellesa, lavado, 1500 msnm."}
+        {"year": 2026, "summary": "Typica y Marsellesa, proceso lavado, servido como espresso en Muri Muri."}
       ]
     },
     "rincon-toningo-comunitario-2026": {
@@ -34,16 +33,15 @@
       "variety": "Lote comunitario",
       "process": "Honey",
       "tastingNotes": ["piña", "limón", "caramelo", "cítricos", "arándano", "fruta roja"],
-      "originStory": "La Cooperativa Rincón Toningo fue fundada en 2004 por 22 productores de café de la comunidad de Rincón Toningo, Veracruz, que se organizaron para producir café de especialidad. Ombligo de Luna describe a la cooperativa como independiente y de origen auténtico.",
-      "productionStory": "Ombligo de Luna sitúa la comunidad a unos 1250 msnm. En su cadena de valor, la cooperativa produce el café, Grupo Moretto procesa y selecciona el café verde para exportación, Ombligo de Luna organiza la exportación desde México y la importación y distribución en Alemania.",
-      "relationship": "Ombligo de Luna visitó por primera vez Rincón Toningo en noviembre de 2020 y formalizó su primer contrato con la cooperativa en diciembre de ese año. En enero de 2021 realizó el pago total por adelantado del lote; su cronología también documenta capacitación en café de especialidad y la primera entrega de 805 kg de café pergamino en marzo de 2021.",
-      "sourceNote": "La página pública de Ombligo de Luna muestra dos cifras distintas para miembros activos de la cooperativa —11 y 7—, así que no publicamos un número actual como dato definitivo.",
+      "originStory": "Rincón Toningo es una comunidad cafetalera de Veracruz donde un grupo de productores decidió organizarse para trabajar de forma colectiva. La cooperativa nació en 2004 y desde entonces ha atravesado años buenos y difíciles, siempre con la idea de seguir produciendo café de especialidad desde la comunidad.",
+      "productionStory": "El proyecto alrededor de Ombligo de Luna busca que el café genere algo más que una transacción. Parte del valor de cada kilo se dirige a un fondo de proyectos en origen. Ese fondo se divide en tres frentes: social, ambiental y económico, con acciones pensadas junto a la comunidad y la cooperativa.",
+      "relationship": "En la parte social trabajan con ALFA, un proyecto enfocado en reducir la brecha de alfabetización y fortalecer la educación de niñas y niños de la comunidad. En lo ambiental desarrollan CAFETO, que compensa parte de la huella del café mediante la plantación de árboles directamente en las parcelas de la cooperativa. Y en la parte económica, el fondo se utiliza para necesidades concretas que ayuden a mantener y mejorar la calidad del café. La idea es sencilla: que el consumo de café también pueda sostener proyectos que regresen valor al lugar donde ese café nace.",
       "sourceUrl": "https://ombligodeluna.mx/why-a-community/",
       "history": [
-        {"year": 2004, "summary": "Fundación de la Cooperativa Rincón Toningo por 22 productores."},
-        {"year": 2020, "summary": "Primera visita de Ombligo de Luna y firma del primer contrato con la cooperativa."},
-        {"year": 2021, "summary": "Pago anticipado, capacitación y primera entrega documentada del lote."},
-        {"year": 2026, "summary": "Lote comunitario incorporado al archivo de Muri Muri."}
+        {"year": 2004, "summary": "Nace la Cooperativa Rincón Toningo, formada por productores de la comunidad."},
+        {"year": 2020, "summary": "Comienza la relación de trabajo entre Ombligo de Luna y la cooperativa."},
+        {"year": 2021, "summary": "Se consolidan compras anticipadas y proyectos de acompañamiento alrededor del café."},
+        {"year": 2026, "summary": "El lote comunitario pasa por Muri Muri y queda registrado en nuestro archivo."}
       ]
     }
   }
