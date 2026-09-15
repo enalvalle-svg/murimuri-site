@@ -14,7 +14,10 @@
       "process": "Lavado",
       "image": "../assets/current-espresso.jpg",
       "tastingNotes": ["té limón", "miel", "cuerpo ligero", "nuez"],
-      "relationship": "La historia de la relación con este productor y comunidad se está documentando. Preferimos publicar esta parte sólo cuando esté verificada.",
+      "originStory": "San Juan Juquila Vijanos es una comunidad rural zapoteca de la Sierra de Juárez o Sierra Norte de Oaxaca, rodeada por bosque mesófilo de montaña. La comunidad alberga pequeños productores que cultivan café bajo sombra natural en parcelas distribuidas por la zona montañosa.",
+      "productionStory": "El documento de la comunidad describe pequeñas parcelas, una zona de producción entre aproximadamente 900 y 1300–1400 msnm y el cultivo de variedades como Typica, Marsellesa, Mundo Novo, Caturra y Geisha. También señala que el cultivo se realiza sin fertilizantes químicos industrializados y con buenas prácticas agrícolas.",
+      "sourceNote": "La etiqueta de este lote indica 1500 msnm. El documento comunitario describe la localidad alrededor de 1540 msnm y zonas de producción entre 900 y 1300–1400 msnm; mantenemos ambos datos separados porque corresponden a fuentes y escalas distintas.",
+      "relationship": "La historia específica de la relación de Muri Muri con Ramiro Dominguez y la comunidad se está documentando. Preferimos publicarla sólo cuando esté verificada.",
       "history": [
         {"year": 2026, "summary": "Espresso actual de Muri Muri: Typica y Marsellesa, lavado, 1500 msnm."}
       ]
@@ -28,11 +31,19 @@
       "origin": "Veracruz",
       "country": "México",
       "altitudeMeters": 1250,
-      "variety": "Catuaí, Caturra y Typica",
+      "variety": "Lote comunitario",
       "process": "Honey",
-      "relationship": "Un lote comunitario que permite contar una relación con una organización de productores y una cadena de valor compartida.",
+      "tastingNotes": ["piña", "limón", "caramelo", "cítricos", "arándano", "fruta roja"],
+      "originStory": "La Cooperativa Rincón Toningo fue fundada en 2004 por 22 productores de café de la comunidad de Rincón Toningo, Veracruz, que se organizaron para producir café de especialidad. Ombligo de Luna describe a la cooperativa como independiente y de origen auténtico.",
+      "productionStory": "Ombligo de Luna sitúa la comunidad a unos 1250 msnm. En su cadena de valor, la cooperativa produce el café, Grupo Moretto procesa y selecciona el café verde para exportación, Ombligo de Luna organiza la exportación desde México y la importación y distribución en Alemania.",
+      "relationship": "Ombligo de Luna visitó por primera vez Rincón Toningo en noviembre de 2020 y formalizó su primer contrato con la cooperativa en diciembre de ese año. En enero de 2021 realizó el pago total por adelantado del lote; su cronología también documenta capacitación en café de especialidad y la primera entrega de 805 kg de café pergamino en marzo de 2021.",
+      "sourceNote": "La página pública de Ombligo de Luna muestra dos cifras distintas para miembros activos de la cooperativa —11 y 7—, así que no publicamos un número actual como dato definitivo.",
+      "sourceUrl": "https://ombligodeluna.mx/why-a-community/",
       "history": [
-        {"year": 2026, "summary": "Lote comunitario de Rincón Toningo."}
+        {"year": 2004, "summary": "Fundación de la Cooperativa Rincón Toningo por 22 productores."},
+        {"year": 2020, "summary": "Primera visita de Ombligo de Luna y firma del primer contrato con la cooperativa."},
+        {"year": 2021, "summary": "Pago anticipado, capacitación y primera entrega documentada del lote."},
+        {"year": 2026, "summary": "Lote comunitario incorporado al archivo de Muri Muri."}
       ]
     }
   }
