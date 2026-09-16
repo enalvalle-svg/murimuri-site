@@ -21,28 +21,59 @@
         {"year": 2026, "summary": "Typica y Marsellesa, proceso lavado, servido como espresso en Muri Muri."}
       ]
     },
-    "rincon-toningo-comunitario-2026": {
-      "name": "Lote Comunitario — Rincón Toningo",
-      "harvestYear": 2026,
+    "finca-los-naranjos-lavado-experimental": {
+      "name": "Finca Los Naranjos",
+      "harvestYear": null,
       "status": "past",
-      "producer": "Cooperativa Rincón Toningo",
-      "community": "Rincón Toningo",
+      "service": "Filtro",
+      "producer": "Familia Cortés Posadas",
+      "community": "Totutla, Huitzilan de Serdán",
+      "origin": "Puebla",
+      "country": "México",
+      "altitudeMeters": 1100,
+      "variety": "Garnica",
+      "process": "Lavado experimental, fermentado con levadura",
+      "tastingNotes": ["lima", "caramelo", "naranja", "cuerpo medio"],
+      "originStory": "Finca Los Naranjos está en Totutla, Huitzilan de Serdán, Puebla, y pertenece a la familia Cortés Posadas. Este lote de Garnica fue trabajado como un lavado experimental con fermentación con levadura.",
+      "productionStory": "La etiqueta de Muri Muri lo registra a 1100 msnm y lo presenta como un café pensado para V60 o métodos de filtración lenta.",
+      "relationship": "Este café quedó en nuestro archivo como una de las expresiones experimentales de Los Naranjos que pasaron por la barra.",
+      "history": []
+    },
+    "finca-las-aguilas-yellow-honey": {
+      "name": "Finca Las Águilas",
+      "harvestYear": null,
+      "status": "past",
+      "service": "Filtro",
+      "producer": "Félix Aguilar",
+      "community": "Atoyac de Álvarez",
+      "origin": "Guerrero",
+      "country": "México",
+      "altitudeMeters": 1450,
+      "variety": "Geisha",
+      "process": "Yellow Honey",
+      "tastingNotes": [],
+      "originStory": "Finca Las Águilas está en Atoyac de Álvarez, Guerrero. Este lote de Geisha, cultivado a 1450 msnm, fue procesado como Yellow Honey.",
+      "productionStory": "La etiqueta de Muri Muri contempla preparación filtrada, espresso u omniroast, reflejando un café que podía moverse entre distintas formas de preparación.",
+      "relationship": "Lo conservamos en el archivo como parte de la selección de cafés de Guerrero que han pasado por Muri Muri.",
+      "history": []
+    },
+    "rincon-toningo-honey": {
+      "name": "Rincón Toningo",
+      "harvestYear": null,
+      "status": "past",
+      "service": "Filtro",
+      "producer": "Productores de Rincón Toningo",
+      "community": "Tlaltetela",
       "origin": "Veracruz",
       "country": "México",
       "altitudeMeters": 1250,
-      "variety": "Lote comunitario",
+      "variety": "Costa Rica, Caturra y Typica",
       "process": "Honey",
-      "tastingNotes": ["piña", "limón", "caramelo", "cítricos", "arándano", "fruta roja"],
-      "originStory": "Rincón Toningo es una comunidad cafetalera de Veracruz donde un grupo de productores decidió organizarse para trabajar de forma colectiva. La cooperativa nació en 2004 y desde entonces ha atravesado años buenos y difíciles, siempre con la idea de seguir produciendo café de especialidad desde la comunidad.",
-      "productionStory": "El proyecto alrededor de Ombligo de Luna busca que el café genere algo más que una transacción. Parte del valor de cada kilo se dirige a un fondo de proyectos en origen. Ese fondo se divide en tres frentes: social, ambiental y económico, con acciones pensadas junto a la comunidad y la cooperativa.",
-      "relationship": "En la parte social trabajan con ALFA, un proyecto enfocado en reducir la brecha de alfabetización y fortalecer la educación de niñas y niños de la comunidad. En lo ambiental desarrollan CAFETO, que compensa parte de la huella del café mediante la plantación de árboles directamente en las parcelas de la cooperativa. Y en la parte económica, el fondo se utiliza para necesidades concretas que ayuden a mantener y mejorar la calidad del café. La idea es sencilla: que el consumo de café también pueda sostener proyectos que regresen valor al lugar donde ese café nace.",
-      "sourceUrl": "https://ombligodeluna.mx/why-a-community/",
-      "history": [
-        {"year": 2004, "summary": "Nace la Cooperativa Rincón Toningo, formada por productores de la comunidad."},
-        {"year": 2020, "summary": "Comienza la relación de trabajo entre Ombligo de Luna y la cooperativa."},
-        {"year": 2021, "summary": "Se consolidan compras anticipadas y proyectos de acompañamiento alrededor del café."},
-        {"year": 2026, "summary": "El lote comunitario pasa por Muri Muri y queda registrado en nuestro archivo."}
-      ]
+      "tastingNotes": [],
+      "originStory": "Este lote proviene de Rincón Toningo, en Tlaltetela, Veracruz, una comunidad cafetalera con la que se han tejido distintos proyectos y colaboraciones alrededor del café.",
+      "productionStory": "La etiqueta de Muri Muri registra una altitud de 1250 msnm, proceso Honey y una mezcla de variedades Costa Rica, Caturra y Typica.",
+      "relationship": "Rincón Toningo aparece varias veces en nuestra historia porque no ha sido una sola visita: distintos cafés y proyectos de la comunidad han pasado por la barra y el archivo de Muri Muri.",
+      "history": []
     }
   }
 }
