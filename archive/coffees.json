@@ -42,9 +42,9 @@
         {"year": 2026, "summary": "Finca El Encanto continúa como parte del menú regular de Muri Muri."}
       ]
     },
-    "finca-el-mango-seasonal-2025": {
+    "finca-el-mango-seasonal": {
       "name": "Finca El Mango",
-      "harvestYear": 2025,
+      "harvestYear": null,
       "status": "past",
       "seasonal": true,
       "service": "Filtro",
@@ -60,7 +60,7 @@
       "productionStory": "Llegó a Muri Muri como parte del Guest Coffee Project de Ombligo de Luna, una colaboración alrededor de pequeños productores de Rincón Toningo y la mejora de sus procesos.",
       "relationship": "Fue nuestro último café de temporada. Lo presentamos por un periodo limitado como una visita especial a la barra, conectando el café de Sergio con el trabajo comunitario del Guest Coffee Project.",
       "sourceUrl": "https://ombligodeluna.coffee/guest-coffee-projekt-mx/",
-      "history": [{"year": 2025, "summary": "Café de temporada invitado en Muri Muri dentro del Guest Coffee Project."}]
+      "history": []
     },
     "finca-los-naranjos-lavado-experimental": {
       "name": "Finca Los Naranjos",
