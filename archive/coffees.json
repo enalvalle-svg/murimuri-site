@@ -21,9 +21,32 @@
         {"year": 2026, "summary": "Typica y Marsellesa, proceso lavado, servido como espresso en Muri Muri."}
       ]
     },
+    "finca-el-encanto-seasonal": {
+      "name": "Finca El Encanto",
+      "harvestYear": null,
+      "status": "current",
+      "seasonal": true,
+      "relationshipSince": 2024,
+      "service": "Filtro / Espresso / Omniroast",
+      "producer": "Marco Antonio Camargo",
+      "community": "Atoyac de Álvarez",
+      "origin": "Guerrero",
+      "country": "México",
+      "altitudeMeters": "900–1000",
+      "variety": "Typica, Caturra y Oro Azteca",
+      "process": "Natural",
+      "tastingNotes": [],
+      "originStory": "Finca El Encanto está en Atoyac de Álvarez, Guerrero. Marco Antonio Camargo trabaja este café entre 900 y 1000 msnm, con Typica, Caturra y Oro Azteca, y un proceso natural.",
+      "productionStory": "Es un café que puede moverse entre filtro, espresso y omniroast. Su regreso a la barra marca una de nuestras temporadas favoritas: cambia la cosecha, pero reconocemos el origen y el trabajo detrás de ella.",
+      "relationship": "Compramos café de Finca El Encanto desde 2024. Por eso no lo vemos como una novedad aislada, sino como una relación que vuelve con cada temporada y que queremos seguir contando a medida que cambia el café.",
+      "history": [
+        {"year": 2024, "summary": "Comienza nuestra relación con Finca El Encanto."},
+        {"year": 2026, "summary": "Finca El Encanto vuelve como café de temporada en la barra de Muri Muri."}
+      ]
+    },
     "finca-los-naranjos-lavado-experimental": {
       "name": "Finca Los Naranjos",
-      "harvestYear": null,
+      "harvestYear": 2025,
       "status": "past",
       "service": "Filtro",
       "producer": "Familia Cortés Posadas",
@@ -35,13 +58,13 @@
       "process": "Lavado experimental, fermentado con levadura",
       "tastingNotes": ["lima", "caramelo", "naranja", "cuerpo medio"],
       "originStory": "Finca Los Naranjos está en Totutla, Huitzilan de Serdán, Puebla, y pertenece a la familia Cortés Posadas. Este lote de Garnica fue trabajado como un lavado experimental con fermentación con levadura.",
-      "productionStory": "La etiqueta de Muri Muri lo registra a 1100 msnm y lo presenta como un café pensado para V60 o métodos de filtración lenta.",
+      "productionStory": "A 1100 msnm, este café mostró una taza de lima, caramelo, naranja y cuerpo medio, pensada para V60 y métodos de filtración lenta.",
       "relationship": "Este café quedó en nuestro archivo como una de las expresiones experimentales de Los Naranjos que pasaron por la barra.",
-      "history": []
+      "history": [{"year": 2025, "summary": "Cosecha 2025 servida en Muri Muri."}]
     },
     "finca-las-aguilas-yellow-honey": {
       "name": "Finca Las Águilas",
-      "harvestYear": null,
+      "harvestYear": 2025,
       "status": "past",
       "service": "Filtro",
       "producer": "Félix Aguilar",
@@ -53,13 +76,13 @@
       "process": "Yellow Honey",
       "tastingNotes": [],
       "originStory": "Finca Las Águilas está en Atoyac de Álvarez, Guerrero. Este lote de Geisha, cultivado a 1450 msnm, fue procesado como Yellow Honey.",
-      "productionStory": "La etiqueta de Muri Muri contempla preparación filtrada, espresso u omniroast, reflejando un café que podía moverse entre distintas formas de preparación.",
+      "productionStory": "Lo trabajamos como un café flexible para distintas preparaciones, desde filtrado hasta espresso u omniroast.",
       "relationship": "Lo conservamos en el archivo como parte de la selección de cafés de Guerrero que han pasado por Muri Muri.",
-      "history": []
+      "history": [{"year": 2025, "summary": "Cosecha 2025 servida en Muri Muri."}]
     },
     "rincon-toningo-honey": {
       "name": "Rincón Toningo",
-      "harvestYear": null,
+      "harvestYear": 2025,
       "status": "past",
       "service": "Filtro",
       "producer": "Productores de Rincón Toningo",
@@ -71,9 +94,9 @@
       "process": "Honey",
       "tastingNotes": [],
       "originStory": "Este lote proviene de Rincón Toningo, en Tlaltetela, Veracruz, una comunidad cafetalera con la que se han tejido distintos proyectos y colaboraciones alrededor del café.",
-      "productionStory": "La etiqueta de Muri Muri registra una altitud de 1250 msnm, proceso Honey y una mezcla de variedades Costa Rica, Caturra y Typica.",
+      "productionStory": "A 1250 msnm, este Honey reúne variedades Costa Rica, Caturra y Typica y forma parte de una historia de colaboración más amplia alrededor de la comunidad.",
       "relationship": "Rincón Toningo aparece varias veces en nuestra historia porque no ha sido una sola visita: distintos cafés y proyectos de la comunidad han pasado por la barra y el archivo de Muri Muri.",
-      "history": []
+      "history": [{"year": 2025, "summary": "Cosecha 2025 servida en Muri Muri."}]
     }
   }
 }
