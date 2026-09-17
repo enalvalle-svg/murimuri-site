@@ -17,15 +17,13 @@
       "originStory": "San Juan Juquila Vijanos es una comunidad zapoteca en la Sierra Norte de Oaxaca, rodeada por bosque mesófilo de montaña. El café forma parte de la vida cotidiana de muchas familias de la comunidad y se cultiva bajo sombra natural, en pequeñas parcelas repartidas entre las laderas.",
       "productionStory": "La geografía de Juquila hace que el trabajo sea muy distinto al de una finca grande y continua: las parcelas son pequeñas, están separadas entre sí y cambian de altura a lo largo de la montaña. En esta zona conviven variedades como Typica, Marsellesa, Mundo Novo, Caturra y Geisha. El cultivo se realiza con buenas prácticas agrícolas y sin fertilizantes químicos industrializados, cuidando una relación muy cercana con el bosque y el entorno.",
       "relationship": "Este lote de Ramiro Dominguez nos gusta porque concentra muchas de las cosas que hacen especial a Juquila: una comunidad cafetalera de montaña, variedades tradicionales y un trabajo de pequeña escala. En taza encontramos té limón, miel, un cuerpo ligero y nuez; una combinación que funciona especialmente bien como espresso.",
-      "history": [
-        {"year": 2026, "summary": "Typica y Marsellesa, proceso lavado, servido como espresso en Muri Muri."}
-      ]
+      "history": [{"year": 2026, "summary": "Typica y Marsellesa, proceso lavado, servido como espresso en Muri Muri."}]
     },
-    "finca-el-encanto-seasonal": {
+    "finca-el-encanto": {
       "name": "Finca El Encanto",
-      "harvestYear": null,
+      "harvestYear": 2026,
       "status": "current",
-      "seasonal": true,
+      "seasonal": false,
       "relationshipSince": 2024,
       "service": "Filtro / Espresso / Omniroast",
       "producer": "Marco Antonio Camargo",
@@ -37,12 +35,32 @@
       "process": "Natural",
       "tastingNotes": [],
       "originStory": "Finca El Encanto está en Atoyac de Álvarez, Guerrero. Marco Antonio Camargo trabaja este café entre 900 y 1000 msnm, con Typica, Caturra y Oro Azteca, y un proceso natural.",
-      "productionStory": "Es un café que puede moverse entre filtro, espresso y omniroast. Su regreso a la barra marca una de nuestras temporadas favoritas: cambia la cosecha, pero reconocemos el origen y el trabajo detrás de ella.",
-      "relationship": "Compramos café de Finca El Encanto desde 2024. Por eso no lo vemos como una novedad aislada, sino como una relación que vuelve con cada temporada y que queremos seguir contando a medida que cambia el café.",
+      "productionStory": "Es uno de los cafés regulares de nuestra barra y lo trabajamos para distintas preparaciones, desde filtro hasta espresso u omniroast.",
+      "relationship": "Compramos café de Finca El Encanto desde 2024. Lo vemos como una relación continua: cada cosecha cambia, pero seguimos regresando al mismo origen y al trabajo de Marco Antonio Camargo.",
       "history": [
         {"year": 2024, "summary": "Comienza nuestra relación con Finca El Encanto."},
-        {"year": 2026, "summary": "Finca El Encanto vuelve como café de temporada en la barra de Muri Muri."}
+        {"year": 2026, "summary": "Finca El Encanto continúa como parte del menú regular de Muri Muri."}
       ]
+    },
+    "finca-el-mango-seasonal-2025": {
+      "name": "Finca El Mango",
+      "harvestYear": 2025,
+      "status": "past",
+      "seasonal": true,
+      "service": "Filtro",
+      "producer": "Sergio Montiel Fernández",
+      "community": "Rincón Toningo, Tlaltetela",
+      "origin": "Veracruz",
+      "country": "México",
+      "altitudeMeters": 1200,
+      "variety": "Gesha",
+      "process": "Honey Rojo",
+      "tastingNotes": [],
+      "originStory": "Finca El Mango es el café de Sergio Montiel Fernández en Rincón Toningo, Tlaltetela, Veracruz. Este lote de Gesha fue trabajado como Honey Rojo a 1200 msnm.",
+      "productionStory": "Llegó a Muri Muri como parte del Guest Coffee Project de Ombligo de Luna, una colaboración alrededor de pequeños productores de Rincón Toningo y la mejora de sus procesos.",
+      "relationship": "Fue nuestro último café de temporada. Lo presentamos por un periodo limitado como una visita especial a la barra, conectando el café de Sergio con el trabajo comunitario del Guest Coffee Project.",
+      "sourceUrl": "https://ombligodeluna.coffee/guest-coffee-projekt-mx/",
+      "history": [{"year": 2025, "summary": "Café de temporada invitado en Muri Muri dentro del Guest Coffee Project."}]
     },
     "finca-los-naranjos-lavado-experimental": {
       "name": "Finca Los Naranjos",
