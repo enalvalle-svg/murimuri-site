@@ -9,9 +9,15 @@ const letters=[];
 sequence.forEach((ch,i)=>{const img=document.createElement('img');img.src=assets[ch];img.className='intro-letter';img.style.left=spots[i][0];img.style.top=spots[i][1];img.style.animationDelay=`${i*.35}s`;img.onclick=assembleLogo;stage.appendChild(img);letters.push(img)});
 function layoutRow(row,top,h,gap){const widths=row.map(img=>(img.naturalWidth/img.naturalHeight)*h);const total=widths.reduce((a,b)=>a+b,0)+gap*(row.length-1);let x=(stage.clientWidth-total)/2;row.forEach((img,j)=>{img.style.height=h+'px';img.style.left=(x+widths[j]/2)+'px';img.style.top=top+'px';img.style.transform='rotate(0)';x+=widths[j]+gap})}
 function assembleLogo(){if(assembling)return;assembling=true;intro.classList.add('assembling');const h=Math.max(58,Math.min(88,stage.clientWidth*.18));const gap=Math.max(10,Math.min(18,stage.clientWidth*.03));const center=stage.clientHeight*.49;const rowOffset=Math.max(h*.86,stage.clientHeight*.115);layoutRow(letters.slice(0,4),center-rowOffset,h,gap);layoutRow(letters.slice(4,8),center+rowOffset,h,gap);setTimeout(finishIntro,1750)}
-function finishIntro(){intro.classList.add('done');sessionStorage.setItem('muriIntroSeen','1')}
+const workshopPopup=document.getElementById('workshopPopup');
+const workshopPopupClose=document.getElementById('workshopPopupClose');
+function showWorkshopPopup(){if(!workshopPopup||sessionStorage.getItem('muriWorkshopPopupSeen'))return;setTimeout(()=>{workshopPopup.classList.add('open');workshopPopup.setAttribute('aria-hidden','false');sessionStorage.setItem('muriWorkshopPopupSeen','1')},500)}
+function closeWorkshopPopup(){if(!workshopPopup)return;workshopPopup.classList.remove('open');workshopPopup.setAttribute('aria-hidden','true')}
+function finishIntro(){intro.classList.add('done');sessionStorage.setItem('muriIntroSeen','1');showWorkshopPopup()}
 document.getElementById('skipIntro').onclick=finishIntro;
-if(sessionStorage.getItem('muriIntroSeen'))intro.classList.add('done');
+if(sessionStorage.getItem('muriIntroSeen')){intro.classList.add('done');showWorkshopPopup()}
+if(workshopPopupClose)workshopPopupClose.onclick=e=>{e.preventDefault();e.stopPropagation();closeWorkshopPopup()};
+if(workshopPopup)workshopPopup.addEventListener('click',e=>{if(e.target===workshopPopup)closeWorkshopPopup()});
 const menuFiles=['assets/menu_1.pdf','assets/menu_2.pdf','assets/menu_3.pdf','assets/cafes_lista_typewriter_pages2 copy.pdf'];
 let menuIndex=0;
 const modal=document.getElementById('menuModal');
@@ -26,7 +32,7 @@ const wipe=document.getElementById('pageWipe');
 window.addEventListener('pageshow',()=>wipe.classList.remove('go'));
 window.addEventListener('pagehide',()=>wipe.classList.remove('go'));
 document.querySelectorAll('a.internal').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();wipe.classList.remove('go');void wipe.offsetWidth;wipe.classList.add('go');setTimeout(()=>location.href=a.href,470)}));
-const revealTargets=document.querySelectorAll('.reveal,.workshop-grid,.coffee-card,#hecho-aqui .section-head,#hecho-aqui .button,.visit-grid');
+const revealTargets=document.querySelectorAll('.reveal,.coffee-card,#hecho-aqui .section-head,#hecho-aqui .button,.visit-grid');
 revealTargets.forEach(el=>el.classList.add('highlight-reveal'));
 const titleTargets=document.querySelectorAll('h1,h2,h3,.address,.wordmark');
 titleTargets.forEach(el=>el.classList.add('title-reveal'));
