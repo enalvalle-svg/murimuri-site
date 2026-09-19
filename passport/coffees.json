@@ -1,0 +1,58 @@
+{
+  "_comment": "Add one entry per coffee/harvest. Slug = key name = what goes in the QR link as ?coffee=SLUG. Omit any section (why, producer, economics, etc.) to hide it on the page — only 'taste' is required.",
+  "coffees": {
+    "rincon-toningo-comunitario": {
+      "name": "Lote Comunitario — Rincón Toningo",
+      "harvestYear": 2026,
+      "taste": {
+        "headline": "TU: completa con la nota de catación real de este lote",
+        "flavorTags": ["por definir"],
+        "moodLine": "Un café que representa el trabajo conjunto de varias familias productoras de Veracruz."
+      },
+      "why": {
+        "variety": "Mezcla de variedades de la cooperativa (Catuaí, Caturra, Typica)",
+        "process": "Honey — beneficio húmedo con secado parcial de la miel del grano",
+        "altitudeMeters": 1250,
+        "roastLevel": "TU: define el nivel de tueste usado",
+        "explainerShort": "Al ser un lote comunitario, mezcla los cafés de distintas parcelas de la cooperativa, procesados con el mismo método honey para mantener consistencia entre productores."
+      },
+      "producer": {
+        "name": "Cooperativa Rincón Toningo",
+        "farmName": "Comunidad Rincón Toningo, Veracruz",
+        "photo": "",
+        "story": "La Cooperativa Rincón Toningo fue fundada en 2004 por 22 productores de café en esta comunidad de Veracruz. Actualmente la conforman productores activos como Doña Ofelia, Doña Cenorina, Doña Margarita, Don Juan, Margarito, Marcelino y Gabriel, quienes siguen produciendo café de especialidad de forma organizada, incluso tras años de altibajos frente a los precios del mercado. Ombligo de Luna trabaja con la cooperativa desde 2020 como parte de una cadena de valor transparente: la cooperativa cultiva y cosecha, Grupo Moretto procesa y selecciona el café verde para exportación, y Ombligo de Luna organiza la exportación desde México e importación en Alemania hasta llegar a los tostadores.",
+        "yearsWorkingTogether": 6
+      },
+      "origin": {
+        "country": "México",
+        "region": "Rincón Toningo, Veracruz",
+        "farmSizeHectares": 10,
+        "lot": "Lote comunitario"
+      },
+      "economics": {
+        "pricePaidPerLb": null,
+        "marketReferencePerLb": null,
+        "paymentTerms": "Pago 100% por adelantado a la cooperativa antes de la entrega del lote",
+        "verified": false
+      },
+      "sustainability": {
+        "practices": [
+          "Cooperativa independiente y autogestionada desde 2004",
+          "Ombligo de Luna es empresa B Corp certificada (Sistema B)",
+          "Cadena de valor documentada: cooperativa → procesamiento (Grupo Moretto) → exportación e importación (Ombligo de Luna) → tostador",
+          "Perfiles públicos de productores individuales (Doña Ofelia, Don Juan, Marcelino, entre otros)"
+        ],
+        "socialProjects": "Como parte del movimiento B Corp / Sistema B, Ombligo de Luna se compromete a medir y mejorar continuamente su impacto social y ambiental en toda la cadena de café."
+      },
+      "harvestHistory": [
+        {"year": 2026, "flavorSummary": "TU: agrega la nota de catación de esta cosecha"}
+      ],
+      "nextActions": {
+        "buyLink": "https://wa.me/525669657508?text=Hola%2C%20quiero%20el%20caf%C3%A9%20de%20Rinc%C3%B3n%20Toningo",
+        "brewGuideLink": "#",
+        "followFarmLink": "https://ombligodeluna.mx/why-a-community/"
+      },
+      "_note_member_count": "Nota interna (no se muestra en la página pública): el sitio de Ombligo de Luna reporta 11 miembros activos en un lugar y 7 en otro (posible desactualización de su parte). Verifica con ellos el número actual antes de publicarlo si quieres incluirlo como dato."
+    }
+  }
+}
