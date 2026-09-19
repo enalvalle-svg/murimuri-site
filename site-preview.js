@@ -45,11 +45,11 @@ const gameModal=document.getElementById('gameModal');
 const gameClose=document.getElementById('gameClose');
 const secretGameTrigger=document.getElementById('secretGameTrigger');
 let gameInited=false;
-let logoTapCount=0;
-let logoTapTimer;
+let characterTapCount=0;
+let characterTapTimer;
 function openGame(){if(!gameModal)return;closeWorkshopPopup();gameModal.classList.add('open');gameModal.setAttribute('aria-hidden','false');if(!gameInited){initRunner();gameInited=true}}
 function closeGame(){if(!gameModal)return;gameModal.classList.remove('open');gameModal.setAttribute('aria-hidden','true')}
-if(secretGameTrigger)secretGameTrigger.addEventListener('click',e=>{logoTapCount++;clearTimeout(logoTapTimer);logoTapTimer=setTimeout(()=>logoTapCount=0,1800);if(logoTapCount>=5){e.preventDefault();logoTapCount=0;openGame()}});
+if(secretGameTrigger)secretGameTrigger.addEventListener('click',e=>{characterTapCount++;clearTimeout(characterTapTimer);characterTapTimer=setTimeout(()=>characterTapCount=0,650);if(characterTapCount>=2){e.preventDefault();characterTapCount=0;openGame()}});
 if(gameClose)gameClose.onclick=closeGame;
 if(gameModal)gameModal.addEventListener('click',e=>{if(e.target===gameModal)closeGame()});
 
@@ -80,3 +80,14 @@ function initRunner(){
   document.addEventListener('keydown',e=>{if(!gameModal.classList.contains('open'))return;if(e.code==='Space'){e.preventDefault();if(!jumpHeld)startJump()}if(e.code==='Enter'&&!running)reset();if(e.code==='Escape')closeGame()});
   document.addEventListener('keyup',e=>{if(e.code==='Space')endJump()});
 }
+
+(function initVisitCounter(){
+  const el=document.getElementById('totalVisits');
+  if(!el)return;
+  const ns='murimuri-coffee';
+  const key='homepage_visits';
+  fetch(`https://countapi.mileshilliard.com/api/v1/hit/${encodeURIComponent(ns)}/${encodeURIComponent(key)}`)
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(d=>{el.textContent=Number(d.value).toLocaleString('es-MX')})
+    .catch(()=>{el.textContent='—'});
+})();
