@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pasaporte del café — Muri Muri</title>
+  <meta name="description" content="Conoce la historia detrás de este café: quién lo cultivó, cómo se procesó y por qué sabe como sabe." />
+  <link rel="icon" href="../assets/logo.png" type="image/png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --accent:#eaad96;
+      --accent-deep:#d98a6e;
+      --sage:#a9b98f;
+      --ink:#2b2420;
+      --muted:#8a7b70;
+      --max:640px;
+      --bg:#fff9f4;
+      --card:#ffffff;
+      --radius:18px;
+    }
+    @font-face{
+      font-family:'Marfa';
+      src:url('../assets/fonts/ABCMARFA-SEMIBOLD-TRIAL.otf') format('opentype');
+      font-weight:700; font-style:normal; font-display:swap;
+    }
+    @font-face{
+      font-family:'MuriSans';
+      src:url('../assets/fonts/Regular.ttf') format('truetype');
+      font-weight:400; font-style:normal; font-display:swap;
+    }
+    *{ box-sizing:border-box }
+    html,body{ margin:0; }
+    body{
+      background:var(--bg); color:var(--ink);
+      font-family:'MuriSans', Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height:1.65;
+    }
+    h1,h2,h3,.display{ font-family:'Marfa','Inter',sans-serif; letter-spacing:.01em; }
+    a{ color:var(--accent-deep); }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 20px; }
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 20px; max-width:var(--max); margin:0 auto;
+    }
+    .topbar a{ font-weight:700; font-size:.85rem; text-decoration:none; }
+    .topbar img{ height:26px; }
+
+    .hero{
+      text-align:center; padding:8px 20px 28px;
+    }
+    .hero .eyebrow{
+      font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      color:var(--muted); margin:0 0 10px;
+    }
+    .hero h1{ font-size:clamp(1.5rem,6vw,2.1rem); margin:0 0 10px; color:var(--accent-deep); }
+    .hero .mood{ color:var(--muted); font-size:1rem; margin:0 auto; max-width:480px; }
+
+    .tagRow{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:18px 0 0; }
+    .tag{
+      background:var(--card); border:1px solid rgba(43,36,32,.08);
+      border-radius:999px; padding:6px 14px; font-size:.85rem; font-weight:600;
+      box-shadow:0 2px 6px rgba(43,36,32,.05);
+    }
+
+    section.card{
+      background:var(--card); border-radius:var(--radius);
+      margin:14px 0; padding:20px 20px 22px;
+      box-shadow:0 4px 16px rgba(43,36,32,.06);
+      border:1px solid rgba(43,36,32,.05);
+    }
+    section.card h2{
+      font-size:1.05rem; margin:0 0 10px; display:flex; align-items:center; gap:8px;
+    }
+    section.card h2 .num{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:22px; height:22px; border-radius:50%;
+      background:var(--accent); color:#2b2420; font-size:.75rem; font-weight:800;
+      font-family:Inter,sans-serif;
+    }
+    section.card p{ margin:0 0 10px; color:var(--ink); }
+    section.card p.muted{ color:var(--muted); font-size:.92rem; }
+
+    .kv{ display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; margin:10px 0 0; }
+    .kv .item{ font-size:.9rem; }
+    .kv .item b{ display:block; font-size:.72rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px; }
+    @media (max-width:420px){ .kv{ grid-template-columns:1fr; } }
+
+    .producerRow{ display:flex; gap:14px; align-items:center; margin-bottom:12px; }
+    .producerRow img{
+      width:64px; height:64px; border-radius:50%; object-fit:cover;
+      border:2px solid var(--accent);
+    }
+    .producerRow .names{ font-weight:700; }
+    .producerRow .names small{ display:block; color:var(--muted); font-weight:600; font-size:.8rem; }
+
+    .evidenceList{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+    .evidenceList li{
+      display:flex; gap:8px; align-items:flex-start; font-size:.92rem;
+    }
+    .evidenceList li::before{ content:"✓"; color:var(--sage); font-weight:800; flex:none; }
+
+    .verifiedBadge{
+      display:inline-flex; align-items:center; gap:5px;
+      background:rgba(169,185,143,.18); color:#4f5c3d;
+      border-radius:999px; padding:4px 10px; font-size:.75rem; font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .timeline{ display:grid; gap:10px; margin-top:8px; }
+    .timeline .yr{
+      display:grid; grid-template-columns:56px 1fr; gap:12px; align-items:baseline;
+    }
+    .timeline .yr .year{ font-weight:800; color:var(--accent-deep); }
+    .timeline .yr .note{ font-size:.9rem; }
+    .timeline .yr.current .note{ font-weight:700; }
+
+    .actionsGrid{ display:grid; gap:10px; margin-top:6px; }
+    .actionBtn{
+      display:flex; align-items:center; justify-content:center;
+      text-decoration:none; font-weight:700; font-size:.92rem;
+      padding:12px 16px; border-radius:999px;
+      background:var(--accent); color:#2b2420;
+      box-shadow:0 4px 12px rgba(234,173,150,.35);
+      transition:transform .15s ease;
+    }
+    .actionBtn:hover{ transform:translateY(-1px); }
+    .actionBtn.secondary{
+      background:var(--card); color:var(--ink); border:1px solid rgba(43,36,32,.12);
+      box-shadow:none;
+    }
+
+    footer{ text-align:center; padding:30px 20px 46px; color:var(--muted); font-size:.82rem; }
+    footer a{ color:var(--muted); text-decoration:underline; }
+
+    .notFound{ text-align:center; padding:60px 24px; }
+    .notFound h1{ color:var(--accent-deep); font-size:1.4rem; }
+
+    details.section-toggle summary{ cursor:pointer; list-style:none; }
+    details.section-toggle summary::-webkit-details-marker{ display:none; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="../index.html">← Muri Muri</a>
+    <img src="../assets/logo.png" alt="Muri Muri" />
+  </div>
+
+  <main id="app"></main>
+
+  <footer>
+    <p>Pasaporte del café — <span id="footY"></span> Muri Muri. <a href="../index.html">Volver al inicio</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('footY').textContent = new Date().getFullYear();
+
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const app = $('#app');
+
+    function esc(s){
+      const d = document.createElement('div');
+      d.textContent = s == null ? '' : String(s);
+      return d.innerHTML;
+    }
+
+    function renderNotFound(){
+      app.innerHTML = `
+        <div class="notFound">
+          <h1>No encontramos este café</h1>
+          <p class="muted">Verifica el código QR o vuelve a intentarlo desde el bolsa/etiqueta.</p>
+          <p><a href="../index.html">Volver a Muri Muri</a></p>
+        </div>`;
+    }
+
+    function renderTaste(c){
+      const tags = (c.taste?.flavorTags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+      return `
+        <div class="hero">
+          <p class="eyebrow">¿A qué sabe?</p>
+          <h1>${esc(c.taste?.headline || c.name)}</h1>
+          ${c.taste?.moodLine ? `<p class="mood">${esc(c.taste.moodLine)}</p>` : ''}
+          <div class="tagRow">${tags}</div>
+        </div>`;
+    }
+
+    function renderWhy(c){
+      if(!c.why) return '';
+      const rows = [
+        c.why.variety ? ['Variedad', c.why.variety] : null,
+        c.why.process ? ['Proceso', c.why.process] : null,
+        c.why.altitudeMeters ? ['Altitud', c.why.altitudeMeters + ' m'] : null,
+        c.why.roastLevel ? ['Tueste', c.why.roastLevel] : null,
+      ].filter(Boolean);
+      return `
+        <section class="card">
+          <h2><span class="num">2</span> ¿Por qué sabe así?</h2>
+          ${c.why.explainerShort ? `<p>${esc(c.why.explainerShort)}</p>` : ''}
+          <div class="kv">
+            ${rows.map(([k,v]) => `<div class="item"><b>${esc(k)}</b>${esc(v)}</div>`).join('')}
+          </div>
+        </section>`;
+    }
+
+    function renderProducer(c){
+      if(!c.producer) return '';
+      const p = c.producer;
+      return `
+        <section class="card">
+          <h2><span class="num">3</span> ¿Quién lo produjo?</h2>
+          <div class="producerRow">
+            ${p.photo ? `<img src="${esc(p.photo)}" alt="${esc(p.name)}" />` : ''}
+            <div class="names">${esc(p.name)}
+              <small>${esc(p.farmName || '')}${p.yearsWorkingTogether ? ' · ' + p.yearsWorkingTogether + ' años trabajando juntos' : ''}</small>
+            </div>
+          </div>
+          ${p.story ? `<p class="muted">${esc(p.story)}</p>` : ''}
+        </section>`;
+    }
+
+    function renderOrigin(c){
+      if(!c.origin) return '';
+      const o = c.origin;
+      const rows = [
+        o.country ? ['País', o.country] : null,
+        o.region ? ['Región', o.region] : null,
+        o.farmSizeHectares ? ['Tamaño de finca', o.farmSizeHectares + ' ha'] : null,
+        o.lot ? ['Lote', o.lot] : null,
+      ].filter(Boolean);
+      return `
+        <section class="card">
+          <h2><span class="num">4</span> ¿De dónde viene?</h2>
+          <div class="kv">
+            ${rows.map(([k,v]) => `<div class="item"><b>${esc(k)}</b>${esc(v)}</div>`).join('')}
+          </div>
+        </section>`;
+    }
+
+    function renderEconomics(c){
+      const e = c.economics;
+      if(!e || !e.verified) return '';
+      const rows = [
+        e.pricePaidPerLb ? ['Precio pagado', '$' + e.pricePaidPerLb + ' / lb'] : null,
+        e.marketReferencePerLb ? ['Referencia de mercado', '$' + e.marketReferencePerLb + ' / lb'] : null,
+        e.paymentTerms ? ['Condiciones de pago', e.paymentTerms] : null,
+      ].filter(Boolean);
+      return `
+        <section class="card">
+          <h2><span class="num">5</span> ¿Qué pasó económicamente?</h2>
+          <span class="verifiedBadge">✓ Información verificada</span>
+          <div class="kv">
+            ${rows.map(([k,v]) => `<div class="item"><b>${esc(k)}</b>${esc(v)}</div>`).join('')}
+          </div>
+        </section>`;
+    }
+
+    function renderSustainability(c){
+      const s = c.sustainability;
+      if(!s) return '';
+      const practices = (s.practices || []).map(p => `<li>${esc(p)}</li>`).join('');
+      return `
+        <section class="card">
+          <h2><span class="num">6</span> ¿Qué significa sostenibilidad aquí?</h2>
+          ${practices ? `<ul class="evidenceList">${practices}</ul>` : ''}
+          ${s.socialProjects ? `<p class="muted" style="margin-top:12px">${esc(s.socialProjects)}</p>` : ''}
+        </section>`;
+    }
+
+    function renderHistory(c){
+      const h = c.harvestHistory;
+      if(!h || !h.length) return '';
+      const rows = h.map(y => `
+        <div class="yr ${y.year === c.harvestYear ? 'current' : ''}">
+          <div class="year">${esc(y.year)}</div>
+          <div class="note">${esc(y.flavorSummary)}</div>
+        </div>`).join('');
+      return `
+        <section class="card">
+          <h2>🌱 Este café a través del tiempo</h2>
+          <div class="timeline">${rows}</div>
+        </section>`;
+    }
+
+    function renderActions(c){
+      const a = c.nextActions;
+      if(!a) return '';
+      const buttons = [];
+      if(a.buyLink) buttons.push(`<a class="actionBtn" href="${esc(a.buyLink)}" target="_blank" rel="noopener">Comprar de nuevo</a>`);
+      if(a.brewGuideLink) buttons.push(`<a class="actionBtn secondary" href="${esc(a.brewGuideLink)}">Cómo prepararlo</a>`);
+      if(a.followFarmLink) buttons.push(`<a class="actionBtn secondary" href="${esc(a.followFarmLink)}">Seguir esta finca</a>`);
+      return `
+        <section class="card">
+          <h2><span class="num">7</span> ¿Qué puedo hacer ahora?</h2>
+          <div class="actionsGrid">${buttons.join('')}</div>
+        </section>`;
+    }
+
+    async function init(){
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('coffee');
+      if(!slug){ renderNotFound(); return; }
+
+      try{
+        const res = await fetch('coffees.json');
+        const data = await res.json();
+        const c = data.coffees && data.coffees[slug];
+        if(!c){ renderNotFound(); return; }
+
+        app.innerHTML = [
+          renderTaste(c),
+          renderWhy(c),
+          renderProducer(c),
+          renderOrigin(c),
+          renderEconomics(c),
+          renderSustainability(c),
+          renderHistory(c),
+          renderActions(c)
+        ].join('');
+      } catch(err){
+        renderNotFound();
+      }
+    }
+    init();
+  </script>
+</body>
+</html>
